@@ -43,6 +43,20 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- sa-token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token</artifactId>
+			<version>1.4.0</version>
+		</dependency>
+
+		<!-- SpringBoot整合redis -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-redis</artifactId>
+			<version>RELEASE</version>
+		</dependency>
 	</dependencies>
 
 	<build>
