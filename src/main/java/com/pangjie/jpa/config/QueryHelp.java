@@ -91,7 +91,7 @@ public class QueryHelp {
 //                field.setAccessible(accessible);
             }
         } catch (Exception e) {
-            log.error(e.getMessage(), e);
+            System.out.println(e.getMessage());
         }
         int size = list.size();
         return cb.and(list.toArray(new Predicate[size]));

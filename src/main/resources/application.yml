@@ -6,7 +6,7 @@ spring:
     url: jdbc:mysql://114.115.255.27:3306/jh_community_light?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull
     username: root
     password: P@ssw0rd123#
-    #配置 Jpa
+    #閰嶇疆 Jpa
     jpa:
       properties:
         hibernate:
@@ -15,10 +15,18 @@ spring:
       open-in-view: true
 
     redis:
-      #数据库索引
+      #閰嶇疆redis
       database: 0
       host: 127.0.0.1
       port: 6379
       password:
-      #连接超时时间
+      #瓒呮椂鏃堕棿
       timeout: 5000
+
+#鍗庝负浜憃bs
+OBS:
+  END_POINT: "https://obs.cn-north-1.myhuaweicloud.com"
+  BUCKET_NAME: "obs-qych"
+  URL: "https://obs-qych.obs.cn-north-1.myhuaweicloud.com/"
+  AK: "6HFIA79OWU1DAWBKFEEF"
+  SK: "tILhHA7wSEly0cqAL0olPzbk3xojTWNpcnAygVuz"
