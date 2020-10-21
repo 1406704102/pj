@@ -14,6 +14,8 @@ sa-token 权限验证
 * 使用aop进行动态查询
 * 使用注解/原生sql查询
 
+### wx
+ * util 微信相关工具类 
 ###obs
    * 华为云obs
 ### util
