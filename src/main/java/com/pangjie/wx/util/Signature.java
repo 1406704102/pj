@@ -7,7 +7,7 @@ import java.util.Base64;
 
 public class Signature {
     private String secretId = "AKIDseAPN8xsW6RVHnJzXp2zgmbGsGNEFOb5";
-    private String secretKey = "SmrfEclcPxsZz95k8IBKFuJSLUP2UiGa";
+    private String secretKey = "xxx";
     private long currentTime;
     private int random;
     private int signValidDuration;
