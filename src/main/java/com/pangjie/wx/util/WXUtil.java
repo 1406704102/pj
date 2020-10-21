@@ -25,7 +25,7 @@ import java.util.*;
 
 public class WXUtil {
     private static final String APPID = "wx476ac149a7edb387";
-    private static final String SECRET = "c876b5e95ad5cf3af006ff9a9a156776";
+    private static final String SECRET = "xxxx";
 
     private static String access_token;
     private static Long access_token_updateTime;
