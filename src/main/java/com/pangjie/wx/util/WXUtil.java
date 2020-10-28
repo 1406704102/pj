@@ -103,8 +103,8 @@ public class WXUtil {
      * @Author pangjie
      * @Description //TODO 文字检测
      * @Date 17:17 2020/10/23 0023
-     * @Param 
-     * @return 
+     * @Param
+     * @return
      */
     private static Boolean checkContent(String accessToken, String content) {
         try {
@@ -189,17 +189,18 @@ public class WXUtil {
     /**
      * 功能描述:
      * No such property: code for class: Script1
+     *
      * @return: 获取公众号授权Token
      * @Author: pangjie
      * @Date: 2020/8/4 0004 10:31
      */
-    public static String getAuthAccessToken(String code){
+    public static String getAuthAccessToken(String code) {
         if (login_access_token != null && (login_access_token_updateTime + 5400000) > new Date().getTime())
             return login_access_token;
         RestTemplate restTemplate = new RestTemplate();
 
         String wxJsonToken = restTemplate.getForObject(String.format("https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code",
-                APPID,SECRET,code), String.class);
+                APPID, SECRET, code), String.class);
         JSONObject jsonToken = JSONObject.parseObject(wxJsonToken);
         if (StringUtils.isNotBlank(String.valueOf(jsonToken))) {
             login_access_token_updateTime = new Date().getTime();
@@ -208,7 +209,7 @@ public class WXUtil {
         }
         return jsonToken.getString("access_token");
     }
-    
+
     /**
      * 功能描述: 签名 url(分享的url)
      * No such property: code for class: Script1
@@ -232,19 +233,12 @@ public class WXUtil {
                 "&url=" + url;
         System.out.println(string1);
 
-        try
-        {
+        try {
             MessageDigest crypt = MessageDigest.getInstance("SHA-1");
             crypt.reset();
             crypt.update(string1.getBytes("UTF-8"));
             signature = byteToHex(crypt.digest());
-        }
-        catch (NoSuchAlgorithmException e)
-        {
-            e.printStackTrace();
-        }
-        catch (UnsupportedEncodingException e)
-        {
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
             e.printStackTrace();
         }
 
@@ -259,14 +253,14 @@ public class WXUtil {
 
     private static String byteToHex(final byte[] hash) {
         Formatter formatter = new Formatter();
-        for (byte b : hash)
-        {
+        for (byte b : hash) {
             formatter.format("%02x", b);
         }
         String result = formatter.toString();
         formatter.close();
         return result;
     }
+
     /**
      * 功能描述: 生成随机字符串
      * No such property: code for class: Script1
