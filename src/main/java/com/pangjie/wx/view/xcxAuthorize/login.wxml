@@ -1,0 +1,1 @@
+<button class="bg-F86564 text-white" type="info" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="bindGetUserInfo" block>登录 / 注册</button>

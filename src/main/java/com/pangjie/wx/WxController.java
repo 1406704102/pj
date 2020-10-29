@@ -1,6 +1,7 @@
 package com.pangjie.wx;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.pangjie.wx.util.WXUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,9 +32,12 @@ public class WxController {
         return new ResponseEntity<>(WXUtil.getSignature(url), HttpStatus.OK);
     }
 
-//    @GetMapping("get_auth_access_token")
-//    public ResponseEntity<Object> getAuthAccessToken(String code,String state){
-//        WXUserInfo authAccessToken = WXUtil.getUserInfo(code);
-//        return new ResponseEntity<>(authAccessToken, HttpStatus.OK);
+
+//    @GetMapping("/getJ2SR")
+//    public ResponseEntity<Object> getJ2SR(String code, UserInfo userInfo, String encryptedData, String iv, HttpServletRequest request) {
+//        String j2SR = WXUtil.getJ2SR(code);
+//        JSONObject json = JSONObject.parseObject(j2SR);
+//        String openid = json.getString("openid");
+//        return new ResponseEntity<>(openid, HttpStatus.OK);
 //    }
 }

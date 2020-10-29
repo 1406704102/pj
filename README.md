@@ -22,7 +22,8 @@ sa-token 权限验证
     1. 如果没有授权则使用 window.location.href = 跳转微信获取code 链接,并在缓存中保存想要去的路由
     1. 返回链接是vue 的前端项目的授权页面,获取微信传来的code,传到后台获取用户信息,成功后返回给授权页并存入缓存
     1. 保存成功后重定向到缓存中保存的路由
-  * view.gzhShare微信公众号网页自定义分享
+  * view.gzhShare 微信公众号网页自定义分享
+  * view.xcxAuthorize 小程序授权
 ###obs
    * 华为云obs
 ### util

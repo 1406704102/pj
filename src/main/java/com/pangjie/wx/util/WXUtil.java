@@ -143,6 +143,19 @@ public class WXUtil {
         return true;
     }
 
+    /*
+     * @Author pangjie
+     * @Description //TODO 小程序授权
+     * @Date 16:09 2020/10/29 0029
+     * @Param 
+     * @return 
+     */
+    public static String getJ2SR(String code) {
+        String s = new RestTemplate().getForObject("https://api.weixin.qq.com/sns/jscode2session?appid=" + APPID + "&secret=" + SECRET + "&js_code=" + code + "&grant_type=authorization_code", String.class);
+        return s;
+    }
+    
+    
     /**
      * 功能描述: 获取 AccessToken
      * No such property: code for class: Script1
