@@ -1,0 +1,14 @@
+系统
+1.查看端口占用 lsof -i:8000
+2.结束某个进程 kill -9 {PID}
+3.查看磁盘情况 df -h
+4.清除nohup.out文件内容 echo "" > nohup.out
+5.运行sh文件 sh xxxx.sh
+
+nginx
+1.nginx 重启/运行 nginx -s reload
+
+docker
+1.列出运行中容器 docker ps
+2.列出所有容器 docker ps -a
+3.停止,启动,结束,重启容器 docker stop,start,kill,restart
