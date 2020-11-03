@@ -16,6 +16,7 @@ sa-token 权限验证
 
 ### wx
  * util 微信相关工具类 (获取各种东西,公众号自定义分享签名)
+ * pay.xcx 小程序支付
  * view.gzhAuthorize 公众号网页授权流程
     1. 根据缓存中是否有用户信息来判断用户是否授权过
     1. 使用钩子函数(除了授权页面 全都需要window.location.href = 跳转微信获取code 链接)
