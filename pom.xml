@@ -114,6 +114,12 @@
 			<version>3.8.1</version>
 		</dependency>
 
+		<!--		微信支付-->
+		<dependency>
+			<groupId>com.github.binarywang</groupId>
+			<artifactId>weixin-java-miniapp</artifactId>
+			<version>3.9.0</version>
+		</dependency>
 
 	</dependencies>
 
@@ -140,6 +146,8 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
+
+
 	</repositories>
 	<pluginRepositories>
 		<pluginRepository>
