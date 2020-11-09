@@ -4,6 +4,8 @@
 3.查看磁盘情况 df -h
 4.清除nohup.out文件内容 echo "" > nohup.out
 5.运行sh文件 sh xxxx.sh
+6.后台运行jar并且不打印日志(>/dev/null 2>&1)
+        nohup java -jar eladmin-system-2.5-8001.jar >/dev/null 2>&1 --spring.profiles.active=prod &
 
 nginx
 1.nginx 重启/运行 nginx -s reload
