@@ -7,10 +7,3 @@
 6.后台运行jar并且不打印日志(>/dev/null 2>&1)
         nohup java -jar eladmin-system-2.5-8001.jar >/dev/null 2>&1 --spring.profiles.active=prod &
 
-nginx
-1.nginx 重启/运行 nginx -s reload
-
-docker
-1.列出运行中容器 docker ps
-2.列出所有容器 docker ps -a
-3.停止,启动,结束,重启容器 docker stop,start,kill,restart
