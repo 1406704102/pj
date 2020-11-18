@@ -31,7 +31,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Override
     public UserInfo findByOpenid(String openid) {
-        return userInfoRepo.findByOpenid(openid);
+        return userInfoRepo.findByUserName(openid);
     }
 
     @Override

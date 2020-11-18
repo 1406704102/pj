@@ -3,9 +3,9 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://114.115.255.27:3306/jh_community_light?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull
+    url: jdbc:mysql://oa.xmay.cc:33060/xmayAuthority?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull
     username: root
-    password: P@ssw0rd123#
+    password: Aa123456
     #配置 Jpa
     jpa:
       properties:

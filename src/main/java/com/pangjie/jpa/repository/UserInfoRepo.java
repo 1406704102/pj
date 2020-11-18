@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import javax.transaction.Transactional;
 
 public interface UserInfoRepo extends JpaRepository<UserInfo, Integer>, JpaSpecificationExecutor<UserInfo> {
-    UserInfo findByOpenid(String openid);
+    UserInfo findByUserName(String userName);
 
 
     /*
@@ -23,6 +23,6 @@ public interface UserInfoRepo extends JpaRepository<UserInfo, Integer>, JpaSpeci
      */
     @Transactional
     @Modifying
-    @Query("update UserInfo u set u.isLight = 0, u.isLottery = 0 ")
+    @Query("update UserInfo u set u.userName = '132' ")
     void updateLightLottery();
 }

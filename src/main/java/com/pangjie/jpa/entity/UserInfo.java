@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 
 @Data
 @Entity
-@Table(name = "user_info")
+@Table(name = "sys_user_info")
 public class UserInfo {
 
     @Id
@@ -17,23 +17,12 @@ public class UserInfo {
     private Integer id;
 
     @Query
-    @Column(name = "name")
-    private String name;
+    @Column(name = "user_name")
+    private String userName;
 
-    @Column(name = "openid")
-    private String openid;
-
-    @Column(name = "community_id")
-    private Integer communityId;
-
-    @Column(name = "community_name")
-    private String communityName;
-
-    @Column(name = "is_lottery")
-    private Integer isLottery;
-
-    @Column(name = "is_light")
-    private Integer isLight;
+    @Query
+    @Column(name = "password")
+    private String password;
 
     @Column(name = "create_time")
     private Timestamp createTime;
