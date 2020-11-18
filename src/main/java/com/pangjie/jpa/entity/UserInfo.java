@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Set;
 
 @Data
 @Entity
@@ -27,4 +28,17 @@ public class UserInfo {
     @Column(name = "create_time")
     private Timestamp createTime;
 
+    /*
+     * @Author pangjie
+     * @Description //TODO  referencedColumnName -> 关联表中对应的id        OrderBy -> 排序
+     * @Date 17:52 2020/11/18 0018
+     * @Param 
+     * @return 
+     */
+    @ManyToMany
+    @JoinTable(name = "sys_user_role",
+            joinColumns = {@JoinColumn(name = "user_id",referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id",referencedColumnName = "id")})
+    @OrderBy("createTime desc")
+    private Set<RoleInfo> roleInfos;
 }
