@@ -26,6 +26,7 @@ sa-token 权限验证
     1. 保存成功后重定向到缓存中保存的路由
   * view.gzhShare 微信公众号网页自定义分享 (引入 npm install weixin-js-sdk)
   * view.xcxAuthorize 小程序授权
+  * view.webview webview 网页返回 微信小程序
 ###obs
    * 华为云obs
 ### util
