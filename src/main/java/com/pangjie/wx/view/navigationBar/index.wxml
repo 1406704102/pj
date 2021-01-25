@@ -1,0 +1,85 @@
+<view class="zmui-container">
+  <view class="zmui-popup" wx:if="{{isPopup}}">
+    <image class="zmui-popup-bg" src="../../static/img/global/dot-bg.png"></image>
+    <image class="zmui-popup-close" bindtap="closePopup" src="../../static/img/global/close-bg.png"></image>
+    <view class="zmui-popup-title">邮件未送达</view>
+    <view class="zmui-popup-titlea">暂时无法阅读</view>
+    <view class="zmui-popup-text">剩余送达时间</view>
+    <view class="zmui-popup-time">19:22</view>
+    <view class="zmui-popup-btn">
+      <button class="zmui-popup-button" bindtap="closePopup">确 定</button>
+    </view>
+  </view>
+
+  <view class="zmui-add-btn" bindtap="goclowwrite">
+    <image class="zmui-add-btn-img" src="../../static/img/global/tianxie.png"></image>
+  </view>
+
+  <view class="zmui-navigation-back" wx:if="{{!isFixed}}" style="height:{{CustomBar + 'px'}};">
+    <view class="zmui-back" bindtap="goBack">
+      <image class="zmui-back-img" src="../../static/img/global/arrow-back.png"></image>
+    </view>
+  </view>
+
+  <view class="zmui-navigation-bar" wx:if="{{isFixed}}">
+    <view class="zmui-status-bar" style="height: {{StatusBar + 'px'}};"></view>
+    <view	class="zmui-navigation-title" style="height: {{(CustomBar - StatusBar) + 'px'}}; line-height: {{(CustomBar - StatusBar) + 'px'}};">慢邮件</view>
+    <view class="zmui-back" bindtap="goBack">
+      <image class="zmui-back-img" src="../../static/img/global/arrow-back-blank.png"></image>
+    </view>
+  </view>
+
+  <view class="zmui-header">
+    <image class="zmui-header-img" src="https://zhuimei.gitee.io/demo/ads/top-bg.png"></image>
+    <view class="zmui-header-time">2021/02/11</view>
+    <view class="zmui-header-border"></view>
+  </view>
+
+  <view class="zmui-choose-bar">
+    <view class="zmui-choose {{isFixed?'zmui-navbar-fixed':''}}" style="top: {{isFixed?CustomBar + 'px':'0'}}" id="zmui-id">
+      <view class="zmui-choose-ul">
+        <view class="zmui-choose-li {{index === typeIndex?'zmui-choose-li-on':''}}" data-index="{{index}}" bindtap="changType" wx:for="{{typeArr}}" wx:key="index">
+          <view class="zmui-choose-li-dot" wx:if="{{index && isTypeNew}}"></view>
+          <view class="zmui-choose-li-name">{{item.name}}</view>
+          <view class="zmui-choose-li-english" wx:if="{{index === typeIndex}}">{{item.english}}</view>
+        </view>
+      </view>
+      <view class="zmui-choose-width"></view>
+      <view class="zmui-choose-switch">
+        <view class="zmui-choose-switch-ul" wx:if="{{!typeIndex}}">
+          <view class="zmui-choose-switch-li {{index === tagIndex?'zmui-choose-switch-li-on':''}}" data-index="{{index}}" bindtap="changTag" wx:for="{{tagArr}}" wx:key="index">{{item}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+  
+  <view class="zmui-content-ul">
+    <view class="zmui-content-li {{!item.isAccept?'zmui-content-li-color':''}}" wx:for="{{lists}}" wx:key="index" data-id="{{item.id}}" data-type="{{item.isSend}}" data-accept="{{item.isAccept}}" bindtap="goreadmail">
+      <view class="zmui-content-title">
+        <view class="zmui-content-icon">
+          <view class="zmui-content-icon-dot" wx:if="{{item.isNew}}"></view>
+          <image class="zmui-content-icon-img" wx:if="{{item.isSend}}" src="../../static/img/global/icon-send.png"></image>
+          <image class="zmui-content-icon-img" wx:else src="../../static/img/global/icon-mail.png"></image>
+        </view>
+        <view class="zmui-content-title-name">{{item.name}}</view>
+        <view class="zmui-content-title-time">{{item.time}}</view>
+      </view>
+      <view class="zmui-content-content">{{item.content}}</view>
+      <view class="zmui-content-bottom">
+        <view class="zmui-content-bottom-type">
+          <image class="zmui-contet-bottom-type-img" wx:if="{{item.type}}" src="../../static/img/global/icon-img.png"></image>
+          <image class="zmui-contet-bottom-type-img" wx:else src="../../static/img/global/icon-video.png"></image>
+        </view>
+        <view class="zmui-content-author">
+          <image class="zmui-content-author-img" src="{{item.avatar}}"></image>
+          <view class="zmui-content-author-text">{{item.author}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="zmui-loadmore" hidden="{{isHideLoadMore}}">
+    <view class="zmui-loading"></view>
+    <view class="zmui-loadmore__tips">正在加载</view>
+  </view>
+</view>
