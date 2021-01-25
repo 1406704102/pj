@@ -1,6 +1,8 @@
 package com.pangjie.jpa.service.impl;
 
 
+import com.pangjie.doubleDBConfig.DataSource;
+import com.pangjie.doubleDBConfig.DataSourceNames;
 import com.pangjie.jpa.config.QueryHelp;
 import org.springframework.data.domain.Page;
 import com.pangjie.jpa.entity.UserInfo;
@@ -21,6 +23,13 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     public void save(UserInfo userInfo) {
         userInfoRepo.save(userInfo);
+    }
+
+    @Override
+    @DataSource(DataSourceNames.TWO)
+    public UserInfo findById2(Integer userId) {
+        Optional<UserInfo> byId = userInfoRepo.findById(userId);
+        return byId.get();
     }
 
     @Override

@@ -9,6 +9,10 @@ springboot的一些配置
 sa-token 权限验证
 *  [文档](http://sa-token.dev33.cn/doc/#/)
 
+### doubleDBConfig 
+   多数据源
+* 使用方法在jpa 包中的 实现类
+
 ### jpa
 
 * 使用aop进行动态查询
@@ -37,3 +41,5 @@ sa-token 权限验证
  * 上传
 ### file 文件操作
 * md5 
+### sql
+* sql 

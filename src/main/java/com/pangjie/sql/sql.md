@@ -1,0 +1,1 @@
+*  随机查询3个 : select * from cmtv_video_info where enable  = 1 order by rand() limit 3

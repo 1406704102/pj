@@ -25,7 +25,7 @@ public class UserInfoCon {
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> find(@PathVariable Integer id) {
-        UserInfo byId = userInfoService.findById(id);
+        UserInfo byId = userInfoService.findById2(id);
         return new ResponseEntity<>(byId, HttpStatus.OK);
     }
 
