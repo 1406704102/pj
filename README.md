@@ -38,6 +38,7 @@ sa-token 权限验证
 * view.xcxAuthorize 小程序授权
 * view.webview webview 网页返回 微信小程序
 * view.navigationBar navigationBar 滑动变色停留
+* view.like 点赞
 
 ### obs
 
