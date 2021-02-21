@@ -6,6 +6,8 @@ springboot的一些配置
 
 * cors 跨域
 
+### koltin 语法
+
 ### satoken
 
 sa-token 权限验证
@@ -15,7 +17,7 @@ sa-token 权限验证
 ### doubleDBConfig
 
 多数据源
-
+* 使用aop实现的多数据源实例
 * 使用方法在jpa 包中的 实现类
 
 ### jpa
@@ -39,6 +41,7 @@ sa-token 权限验证
 * view.webview webview 网页返回 微信小程序
 * view.navigationBar navigationBar 滑动变色停留
 * view.like 点赞
+* webview index.html 网页跳转小程序
 
 ### obs
 

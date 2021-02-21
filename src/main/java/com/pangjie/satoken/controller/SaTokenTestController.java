@@ -9,6 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.Socket;
+
 
 @RestController
 @RequestMapping("/test/")
@@ -111,5 +117,14 @@ public class SaTokenTestController {
     @RequestMapping("getInfo")
     public AjaxJson getInfo() {
         return AjaxJson.getSuccessData("用户信息");
+    }
+
+    public static void main(String[] args) throws IOException {
+        Socket socket = new Socket("10.0232.148", 8080);
+        OutputStream outputStream = socket.getOutputStream();
+        OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream);
+        BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
+        bufferedWriter.write("黄文猪!!!");
+        bufferedWriter.flush();
     }
 }

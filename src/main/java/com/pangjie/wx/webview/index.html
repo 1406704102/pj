@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>my</title>
+  <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.3.2.js"></script>
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+</head>
+<body>
+  <div id="app" onclick="go()" style="background:blue; margin:40px auto; font-size:30px;width:190px;height:70px;line-height: 70px;color:#fff;text-align: center;">返回彩铃主页</div>
+<script type="text/javascript">
+  function go(s) {
+    console.log(33)
+    //  该方法主要用于在小程序中已注册页面之间的跳转。
+    //wx.miniProgram.navigateTo({url: '/pages/live/home/index'})
+
+    // 比如你想通过web-view跳转到tabBar页面，那么此时使用wx.navigateTo（）和wx.redirectTo()都不会成功。
+     wx.miniProgram.switchTab({
+       url:'/pages/ring/home/index',
+       success: function(){
+         //alert('success')
+       },
+       fail: function(){
+        //alert('fail');
+       },
+       complete:function(){
+         //alert('complete');
+       }
+     });
+  };
+</script>
+</body>
+</html>
