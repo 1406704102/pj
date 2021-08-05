@@ -22,6 +22,7 @@ Page({
     typeIndex: 0,
     isTypeNew: true,
 
+
     tagArr: ['时间', '点赞'],
     tagIndex: 0,
 
