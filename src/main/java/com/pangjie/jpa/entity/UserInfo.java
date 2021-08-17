@@ -31,10 +31,17 @@ public class UserInfo {
     /*
      * @Author pangjie
      * @Description //TODO  referencedColumnName -> 关联表中对应的id        OrderBy -> 排序
+     *
+     *      没有关联表:{
+     *      @OneToOne
+     *      @JoinColumn(name = "video_id2")
+     *      }
+     *
      * @Date 17:52 2020/11/18 0018
      * @Param 
      * @return 
      */
+//    @OneToOne
     @ManyToMany
     @JoinTable(name = "sys_user_role",
             joinColumns = {@JoinColumn(name = "user_id",referencedColumnName = "id")},
