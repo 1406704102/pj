@@ -26,6 +26,8 @@ sa-token 权限验证
 * 使用注解/原生sql查询
 * 多对多映射关系
 
+### redis
+ * StringRedisTemplate的各种操作
 ### wx
 
 * util 微信相关工具类 (获取各种东西,公众号自定义分享签名)
