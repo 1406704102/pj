@@ -90,13 +90,7 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
 //    @Cacheable(value = "userInfo", key = "'user:'")
     public Map<String, Object> queryAll(UserInfo userInfo, Pageable pageable) {
-        Page<UserInfo> all = userInfoRepo.findAll((root, criteriaQuery, criteriaBuilder) -> {
-            Predicate predicate = QueryHelp.getPredicate(root, userInfo, criteriaBuilder);
-            return predicate;
-        }, pageable);
-//        Predicate predicate = QueryHelp.getPredicate(root, userInfo, criteriaBuilder);
-
-//        Page<UserInfo> all = userInfoRepo.findAll((root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.equal(root.get("id"), "1"), pageable);
+        Page<UserInfo> all = userInfoRepo.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.getPredicate(root, userInfo, criteriaBuilder), pageable);
         return PageUtil.toPage(all);
     }
 
