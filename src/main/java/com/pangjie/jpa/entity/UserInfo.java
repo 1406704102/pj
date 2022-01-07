@@ -22,8 +22,8 @@ public class UserInfo {
     private String userName;
 
     @Query
-    @Column(name = "password")
-    private String password;
+    @Column(name = "pass_word")
+    private String passWord;
 
     @Column(name = "create_time")
     private Timestamp createTime;

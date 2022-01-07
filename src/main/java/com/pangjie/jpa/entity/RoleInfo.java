@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Data
 @Entity
@@ -20,4 +21,10 @@ public class RoleInfo {
 
     @Column(name = "create_time")
     private Timestamp createTime;
+
+    @ManyToMany
+    @JoinTable(name = "sys_role_menu",
+            joinColumns = {@JoinColumn(name = "menu_id",referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id",referencedColumnName = "id")})
+    private List<MenuInfo> menus;
 }

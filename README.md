@@ -6,6 +6,7 @@ springboot的一些配置
 
 * cors 跨域
 
+
 ### koltin 语法
 
 ### satoken
@@ -20,14 +21,21 @@ sa-token 权限验证
 * 使用aop实现的多数据源实例
 * 使用方法在jpa 包中的 实现类
 
+### springSecurity
+* springSecurity&jwt配置
+* 根据注解判断方法是可以匿名访问
+
 ### jpa
 
-* 使用aop进行动态查询
+* 动态查询
 * 使用注解/原生sql查询
 * 多对多映射关系
 
 ### redis
+ * redis 配置
  * StringRedisTemplate的各种操作
+ * key的模糊查询
+ * 使用@Cacheable 添加缓存
 ### wx
 
 * util 微信相关工具类 (获取各种东西,公众号自定义分享签名)
@@ -43,6 +51,7 @@ sa-token 权限验证
 * view.webview webview 网页返回 微信小程序
 * view.navigationBar navigationBar 滑动变色停留
 * view.like 点赞
+* view.myHttp 发起请求封装
 * webview index.html 网页跳转小程序
 
 ### dy

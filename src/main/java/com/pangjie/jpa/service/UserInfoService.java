@@ -3,12 +3,12 @@ package com.pangjie.jpa.service;
 import com.pangjie.doubleDBConfig.DataSource;
 import com.pangjie.doubleDBConfig.DataSourceNames;
 import com.pangjie.jpa.entity.UserInfo;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public interface UserInfoService {
@@ -25,5 +25,11 @@ public interface UserInfoService {
 
     void updateLightLottery();
 
-    Page<UserInfo> queryAll(UserInfo userInfo, Pageable pageable);
+    Map<String, Object> queryAll(UserInfo userInfo, Pageable pageable);
+
+    UserInfo findByUserName(String username);
+
+    Map<String,Object> login(UserInfo userInfo);
+
+    UserInfo register(UserInfo userInfo);
 }

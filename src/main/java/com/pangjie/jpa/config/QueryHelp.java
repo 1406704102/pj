@@ -16,7 +16,6 @@
 package com.pangjie.jpa.config;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.pangjie.jpa.config.annotation.Query;
 import lombok.extern.slf4j.Slf4j;
@@ -28,11 +27,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-/**
- * @author Zheng Jie
- * @date 2019-6-4 14:59:48
- */
-@Slf4j
 @SuppressWarnings({"unchecked","all"})
 public class QueryHelp {
 
@@ -53,8 +47,6 @@ public class QueryHelp {
                 if (q != null) {
                     //获取属性名称
                     String attributeName = field.getName();
-                    //属性类型
-                    Class<?> fieldType = field.getType();
                     //获取传入值值
                     Object val = field.get(query);
                     if (ObjectUtil.isNull(val) || "".equals(val)) {
@@ -63,48 +55,39 @@ public class QueryHelp {
                     Join join = null;
                     switch (q.type()) {
                         case EQUAL:
-                            list.add(cb.equal(getExpression(attributeName,join,root)
-                                    .as((Class<? extends Comparable>) fieldType),val));
+                            list.add(cb.equal(root.get(attributeName),val));
                             break;
                         case IN:
                             if (CollUtil.isNotEmpty((Collection<Long>)val)) {
-                                list.add(getExpression(attributeName,join,root).in((Collection<Long>) val));
+                                list.add(root.get(attributeName).in((Collection<Long>) val));
                             }
                             break;
                         case NOT_EQUAL:
-                            list.add(cb.notEqual(getExpression(attributeName,join,root), val));
+                            list.add(cb.notEqual(root.get(attributeName), val));
                             break;
                         case NOT_NULL:
-                            list.add(cb.isNotNull(getExpression(attributeName,join,root)));
+                            list.add(cb.isNotNull(root.get(attributeName)));
                             break;
                         case IS_NULL:
-                            list.add(cb.isNull(getExpression(attributeName,join,root)));
+                            list.add(cb.isNull(root.get(attributeName)));
                             break;
                         case BETWEEN:
                             List<Object> between = new ArrayList<>((List<Object>)val);
-                            list.add(cb.between(getExpression(attributeName, join, root).as((Class<? extends Comparable>) between.get(0).getClass()),
-                                    (Comparable) between.get(0), (Comparable) between.get(1)));
+//                            先判断是什么类型
+//                            cb.between(root.get(attributeName), 1, 2);
                             break;
                         default: break;
                     }
                 }
-//                field.setAccessible(accessible);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         int size = list.size();
-        return cb.and(list.toArray(new Predicate[size]));
+        Predicate[] predicates = list.toArray(new Predicate[size]);
+        return cb.and(predicates);
     }
 
-    @SuppressWarnings("unchecked")
-    private static <T, R> Expression<T> getExpression(String attributeName, Join join, Root<R> root) {
-        if (ObjectUtil.isNotEmpty(join)) {
-            return join.get(attributeName);
-        } else {
-            return root.get(attributeName);
-        }
-    }
 
     private static boolean isBlank(final CharSequence cs) {
         int strLen;

@@ -40,3 +40,9 @@ OBS:
   URL: "https://obs-qych.obs.cn-north-1.myhuaweicloud.com/"
   AK: "6HFIA79OWU1DAWBKFEEF"
   SK: "tILhHA7wSEly0cqAL0olPzbk3xojTWNpcnAygVuz"
+
+jwt:
+  tokenHeader: PJ-Token #JWT存储的请求头
+  tokenHead: Bearer  #令牌前缀
+  secret: pangjieAdminSecretpangjieAdminSecretpangjieAdminSecretpangjieAdminSecretpangjieAdminSecretpangjieAdminSecret #JWT加解密使用的密钥
+  expiration: 604800 #JWT的超期限时间秒(60*60*24)

@@ -1,9 +1,15 @@
 package com.pangjie.redis;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.core.Cursor;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.serializer.RedisSerializer;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class RedisTemplateTest {
@@ -40,5 +46,20 @@ public class RedisTemplateTest {
         //验证有效时间
         Long expire = redisTemplate.boundHashOps("key").getExpire();
         System.out.println("redis有效时间：" + expire + "S");
+
+        List<String> keys = new ArrayList<>();
+        stringRedisTemplate.execute((RedisConnection connection) -> {
+            try (Cursor<byte[]> cursor = connection.scan(
+                    ScanOptions.scanOptions()
+                            .count(Long.MAX_VALUE)
+                            .match("*-talk-")
+                            .build()
+            )) {
+                cursor.forEachRemaining(item -> keys.add(RedisSerializer.string().deserialize(item)));
+                return null;
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 }

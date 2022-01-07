@@ -36,6 +36,7 @@ public class DataSourceAspect implements Ordered {
         MethodSignature signature = (MethodSignature) point.getSignature();
         Method method = signature.getMethod();
         DataSource ds = method.getAnnotation(DataSource.class);
+//        Class<? extends Method> aClass = method.getClass();
         // 通过判断 DataSource 中的值来判断当前方法应用哪个数据源
         DynamicDataSource.setDataSource(ds.value());
         System.out.println("当前数据源: " + ds.value());
