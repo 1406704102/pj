@@ -26,6 +26,17 @@ public class UserInfoCon {
         return new ResponseEntity<>(byId, HttpStatus.OK);
     }
 
+    @PutMapping("/add")
+    public ResponseEntity<Object> add(@RequestBody UserInfo userInfo) {
+        return new ResponseEntity<>(userInfoService.save(userInfo),HttpStatus.CREATED);
+    }
+
+    @PutMapping("/add2")
+    public ResponseEntity<Object> add2(@RequestBody UserInfo userInfo) {
+        return new ResponseEntity<>(userInfoService.save2(userInfo),HttpStatus.CREATED);
+    }
+
+
     @GetMapping
     @WithoutToken
     public ResponseEntity<Object> query(UserInfo userInfo, Pageable pageable) {

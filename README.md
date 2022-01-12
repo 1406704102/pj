@@ -30,6 +30,9 @@ sa-token 权限验证
 * 动态查询
 * 使用注解/原生sql查询
 * 多对多映射关系
+### nginx
+* nginx.conf 配置文件
+* xl 限流写法
 
 ### redis
  * redis 配置

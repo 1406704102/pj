@@ -12,7 +12,9 @@ import java.util.Map;
 
 @Service
 public interface UserInfoService {
-    void save(UserInfo userInfo);
+    UserInfo save(UserInfo userInfo);
+
+    UserInfo save2(UserInfo userInfo);
 
     UserInfo findById2(Integer userId);
 

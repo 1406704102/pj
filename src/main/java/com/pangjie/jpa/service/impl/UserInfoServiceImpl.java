@@ -7,7 +7,6 @@ import com.pangjie.jpa.config.QueryHelp;
 import com.pangjie.springSecurity.JwtTokenUtil;
 import com.pangjie.util.PageUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.engine.internal.JoinSequence;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheConfig;
@@ -27,8 +26,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.Predicate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,8 +50,14 @@ public class UserInfoServiceImpl implements UserInfoService {
     private String tokenHead;
 
     @Override
-    public void save(UserInfo userInfo) {
-        userInfoRepo.save(userInfo);
+    public UserInfo save(UserInfo userInfo) {
+        return userInfoRepo.save(userInfo);
+    }
+
+    @Override
+    @DataSource(DataSourceNames.TWO)
+    public UserInfo save2(UserInfo userInfo) {
+       return userInfoRepo.save(userInfo);
     }
 
     @Override
