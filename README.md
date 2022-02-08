@@ -73,6 +73,7 @@ sa-token 权限验证
   * ip
   * jackson
   * 二维码
+  * BigDecimal
 
 ### linux
 
