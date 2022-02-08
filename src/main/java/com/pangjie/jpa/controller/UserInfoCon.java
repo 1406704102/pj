@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -27,6 +28,7 @@ public class UserInfoCon {
     }
 
     @PutMapping("/add")
+    @PreAuthorize("@roleCheck.check('1:系统设置')")
     public ResponseEntity<Object> add(@RequestBody UserInfo userInfo) {
         return new ResponseEntity<>(userInfoService.save(userInfo),HttpStatus.CREATED);
     }

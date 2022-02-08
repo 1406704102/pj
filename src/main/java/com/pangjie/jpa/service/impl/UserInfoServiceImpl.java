@@ -17,19 +17,20 @@ import com.pangjie.jpa.repository.UserInfoRepo;
 import com.pangjie.jpa.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -57,11 +58,11 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     @DataSource(DataSourceNames.TWO)
     public UserInfo save2(UserInfo userInfo) {
-       return userInfoRepo.save(userInfo);
+        return userInfoRepo.save(userInfo);
     }
 
     @Override
-    @DataSource(DataSourceNames.TWO)
+//    @DataSource(DataSourceNames.TWO)
     @Cacheable(key = "'user:' + #p0")
     public UserInfo findById2(Integer userId) {
         Optional<UserInfo> byId = userInfoRepo.findById(userId);
@@ -107,6 +108,8 @@ public class UserInfoServiceImpl implements UserInfoService {
         String token = null;
         try {
             UserDetails userDetails = userDetailsService.loadUserByUsername(userInfo.getUserName());
+            List<String> collect = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
+
             if (!passwordEncoder.matches(userInfo.getPassWord(), userDetails.getPassword())) {
                 throw new BadCredentialsException("密码不正确");
             }
@@ -116,6 +119,7 @@ public class UserInfoServiceImpl implements UserInfoService {
         } catch (AuthenticationException e) {
             log.warn("登录异常:{}", e.getMessage());
         }
+
         HashMap<String, Object> data = new HashMap<>();
         data.put("token", tokenHead + " " + token);
         return data;

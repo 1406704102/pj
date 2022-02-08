@@ -24,6 +24,7 @@ sa-token 权限验证
 ### springSecurity
 * springSecurity&jwt配置
 * 根据注解判断方法是可以匿名访问
+* 使用PreAuthorize("")验证权限
 
 ### jpa
 

@@ -33,20 +33,22 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
         String authHeader = httpServletRequest.getHeader(this.tokenHeader);
-        if (!StringUtils.isNotBlank(authHeader) && authHeader.startsWith(this.tokenHead)) {
-            String authToken = authHeader.substring(this.tokenHead.length());
-            String username = jwtTokenUtil.getUserNameFromToken(authToken);
-            log.info("checking authentication " + username);
-            if (StringUtils.isNotBlank(username) && SecurityContextHolder.getContext().getAuthentication() == null) {
-                UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-                // 校验token
-                if (jwtTokenUtil.validateToken(authToken, userDetails)) {
-                    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                            userDetails, null, userDetails.getAuthorities());
-                    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(
-                            httpServletRequest));
-                    log.info("authenticated user " + username + ", setting security context");
-                    SecurityContextHolder.getContext().setAuthentication(authentication);
+        if (authHeader!=null) {
+            if (StringUtils.isNotBlank(authHeader) && authHeader.startsWith(this.tokenHead)) {
+                String authToken = authHeader.substring(this.tokenHead.length());
+                String username = jwtTokenUtil.getUserNameFromToken(authToken);
+                log.info("checking authentication " + username);
+                if (StringUtils.isNotBlank(username) && SecurityContextHolder.getContext().getAuthentication() == null) {
+                    UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+                    // 校验token
+                    if (jwtTokenUtil.validateToken(authToken, userDetails)) {
+                        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                                userDetails, null, null);
+                        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(
+                                httpServletRequest));
+                        log.info("authenticated user " + username + ", setting security context");
+                        SecurityContextHolder.getContext().setAuthentication(authentication);
+                    }
                 }
             }
         }

@@ -20,15 +20,13 @@ public class DynamicDataSourceConfig {
     @Bean
     @ConfigurationProperties("spring.datasource.druid.one")
     public DataSource oneDataSource(){
-        DataSource dataSource = DruidDataSourceBuilder.create().build();
-        return dataSource;
+        return DruidDataSourceBuilder.create().build();
     }
 
     @Bean
     @ConfigurationProperties("spring.datasource.druid.two")
     public DataSource twoDataSource(){
-        DataSource dataSource = DruidDataSourceBuilder.create().build();
-        return dataSource;
+        return DruidDataSourceBuilder.create().build();
     }
     
     /**

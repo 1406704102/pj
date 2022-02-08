@@ -1,14 +1,18 @@
 package com.pangjie.springSecurity;
 
 import com.pangjie.jpa.entity.MenuInfo;
+import com.pangjie.jpa.entity.RoleInfo;
 import com.pangjie.jpa.entity.UserInfo;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class JwtUser implements UserDetails {
 
@@ -22,10 +26,15 @@ public class JwtUser implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        //返回当前用户的权限
-        return menuInfoList.stream()
-                .map(resource ->new SimpleGrantedAuthority(resource.getId()+":"+resource.getTitle()))
-                .collect(Collectors.toList());
+        Set<RoleInfo> roleInfos = userInfo.getRoleInfos();
+        List<SimpleGrantedAuthority> collect = new ArrayList<>();
+        //获得所有权限名称
+        roleInfos.forEach(f->{
+            List<MenuInfo> menus = f.getMenus();
+            collect.addAll(menus.stream().map(resource -> new SimpleGrantedAuthority(resource.getId() + ":" + resource.getTitle()))
+                    .collect(Collectors.toList()));
+        });
+        return collect;
     }
 
     @Override
