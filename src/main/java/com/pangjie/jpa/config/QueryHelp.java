@@ -57,11 +57,11 @@ public class QueryHelp {
                         case EQUAL:
                             list.add(cb.equal(root.get(attributeName),val));
                             break;
-                        case IN:
-                            if (CollUtil.isNotEmpty((Collection<Long>)val)) {
-                                list.add(root.get(attributeName).in((Collection<Long>) val));
-                            }
-                            break;
+//                        case IN:
+//                            if (CollUtil.isNotEmpty((Collection<Long>)val)) {
+//                                list.add(root.get(attributeName).in((Collection<Long>) val));
+//                            }
+//                            break;
                         case NOT_EQUAL:
                             list.add(cb.notEqual(root.get(attributeName), val));
                             break;

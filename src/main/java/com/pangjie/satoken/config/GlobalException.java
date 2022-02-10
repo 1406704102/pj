@@ -29,7 +29,7 @@ public class GlobalException {
 
 		// 打印堆栈，以供调试
 		e.printStackTrace();
-
+		
 		// 不同异常返回不同状态码 
 		AjaxJson aj = null;
 		if (e instanceof NotLoginException) {	// 如果是未登录异常
@@ -38,7 +38,8 @@ public class GlobalException {
 			NotPermissionException ee = (NotPermissionException) e;
 			aj = AjaxJson.getNotJur("无此权限：" + ee.getCode());
 		} else {	// 普通异常, 输出：500 + 异常信息
-			aj = AjaxJson.getError(e.getMessage());
+			String message = e.getMessage();
+			aj = AjaxJson.getError(message);
 		}
 		
 		// 返回给前端

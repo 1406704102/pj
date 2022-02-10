@@ -7,6 +7,7 @@ import com.pangjie.jpa.config.QueryHelp;
 import com.pangjie.springSecurity.JwtTokenUtil;
 import com.pangjie.util.PageUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.ss.formula.ptg.Pxg;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheConfig;
@@ -17,6 +18,7 @@ import com.pangjie.jpa.repository.UserInfoRepo;
 import com.pangjie.jpa.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -29,6 +31,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -95,7 +101,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 //    @Cacheable(value = "userInfo", key = "'user:'")
     public Map<String, Object> queryAll(UserInfo userInfo, Pageable pageable) {
         Page<UserInfo> all = userInfoRepo.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.getPredicate(root, userInfo, criteriaBuilder), pageable);
-        return PageUtil.toPage(all);
+         return PageUtil.toPage(all);
     }
 
     @Override
@@ -139,4 +145,5 @@ public class UserInfoServiceImpl implements UserInfoService {
         newUser.setPassWord(encodePassword);
         return userInfoRepo.save(newUser);
     }
+
 }
