@@ -17,21 +17,24 @@ spring:
 #    username: root
 #    password: Aa123456
     #配置 Jpa
-    jpa:
-      properties:
-        hibernate:
-          ddl-auto: none
-          dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-      open-in-view: true
+  jpa:
+    properties:
+      hibernate:
+        ddl-auto: none
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        show-sql: true
+        format_sql: true
+    open-in-view: true
 
-    redis:
+
+  redis:
       #配置redis
-      database: 0
-      host: 127.0.0.1
-      port: 6379
-      password:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    password:
       #超时时间
-      timeout: 5000
+    timeout: 5000
 
 #华为云obs
 OBS:
@@ -45,4 +48,4 @@ jwt:
   tokenHeader: PJ-Token #JWT存储的请求头
   tokenHead: Bearer  #令牌前缀
   secret: pangjieAdminSecretpangjieAdminSecretpangjieAdminSecretpangjieAdminSecretpangjieAdminSecretpangjieAdminSecret #JWT加解密使用的密钥
-  expiration: 604800 #JWT的超期限时间秒(60*60*24)
+  expiration: 10 #JWT的超期限时间秒(60*60*24)
