@@ -19,9 +19,11 @@ import cn.hutool.core.lang.Assert;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.parser.ParserConfig;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
@@ -37,6 +39,7 @@ import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.RedisSerializer;
 
@@ -57,12 +60,13 @@ import java.util.Map;
 @EnableConfigurationProperties(RedisProperties.class)
 public class RedisConfig extends CachingConfigurerSupport {
 
+
     /**
-     *  设置 redis 数据默认过期时间，默认2小时
-     *  设置@cacheable 序列化方式
+     * 设置 redis 数据默认过期时间，默认2小时
+     * 设置@cacheable 序列化方式
      */
     @Bean
-    public RedisCacheConfiguration redisCacheConfiguration(){
+    public RedisCacheConfiguration redisCacheConfiguration() {
         FastJsonRedisSerializer<Object> fastJsonRedisSerializer = new FastJsonRedisSerializer<>(Object.class);
         RedisCacheConfiguration configuration = RedisCacheConfiguration.defaultCacheConfig();
         configuration = configuration.serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(fastJsonRedisSerializer)).entryTtl(Duration.ofHours(2));
@@ -72,8 +76,8 @@ public class RedisConfig extends CachingConfigurerSupport {
     @SuppressWarnings("all")
     @Bean(name = "redisTemplate")
     @ConditionalOnMissingBean(name = "redisTemplate")
-    public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
-        RedisTemplate<Object, Object> template = new RedisTemplate<>();
+    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
+        RedisTemplate<String, Object> template = new RedisTemplate<>();
         //序列化
         FastJsonRedisSerializer<Object> fastJsonRedisSerializer = new FastJsonRedisSerializer<>(Object.class);
         // value值的序列化采用fastJsonRedisSerializer
@@ -95,17 +99,17 @@ public class RedisConfig extends CachingConfigurerSupport {
     @Override
     public KeyGenerator keyGenerator() {
         return (target, method, params) -> {
-            Map<String,Object> container = new HashMap<>(3);
+            Map<String, Object> container = new HashMap<>(3);
             Class<?> targetClassClass = target.getClass();
             // 类地址
-            container.put("class",targetClassClass.toGenericString());
+            container.put("class", targetClassClass.toGenericString());
             // 方法名称
-            container.put("methodName",method.getName());
+            container.put("methodName", method.getName());
             // 包名称
-            container.put("package",targetClassClass.getPackage());
+            container.put("package", targetClassClass.getPackage());
             // 参数列表
             for (int i = 0; i < params.length; i++) {
-                container.put(String.valueOf(i),params[i]);
+                container.put(String.valueOf(i), params[i]);
             }
             // 转为JSON字符串
             String jsonString = JSON.toJSONString(container);

@@ -4,6 +4,7 @@ import com.pangjie.lottery.entiy.GoodsInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Lock;
+import org.springframework.data.jpa.repository.Modifying;
 
 import javax.persistence.LockModeType;
 import java.util.Optional;
@@ -11,4 +12,7 @@ import java.util.Optional;
 public interface GoodsInfoRepo extends JpaRepository<GoodsInfo, Integer>, JpaSpecificationExecutor<Integer> {
 //    @Lock(value = LockModeType.PESSIMISTIC_WRITE)
     Optional<GoodsInfo> findAllById(Integer id);
+
+//    @Modifying(clearAutomatically = true, flushAutomatically = true)
+//    GoodsInfo save(GoodsInfo goodsInfo);
 }

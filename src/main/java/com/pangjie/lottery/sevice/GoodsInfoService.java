@@ -9,5 +9,7 @@ import java.util.List;
 public interface GoodsInfoService {
     List<GoodsInfo> findAll();
 
-    void reduceStock(GoodsInfo goodsInfo);
+    void reduceStock(int userId);
+
+    void reduceStock2( int userId);
 }

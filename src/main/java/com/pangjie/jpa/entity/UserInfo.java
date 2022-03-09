@@ -48,4 +48,8 @@ public class UserInfo {
             inverseJoinColumns = {@JoinColumn(name = "role_id",referencedColumnName = "id")})
     @OrderBy("createTime desc")
     private Set<RoleInfo> roleInfos;
+
+
+    @Column(name = "lottery_times", columnDefinition = "0")
+    private Integer lotteryTimes;
 }
