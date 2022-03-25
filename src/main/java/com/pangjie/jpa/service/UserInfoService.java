@@ -1,7 +1,7 @@
 package com.pangjie.jpa.service;
 
-import com.pangjie.doubleDBConfig.DataSource;
-import com.pangjie.doubleDBConfig.DataSourceNames;
+import com.pangjie.dynamicDBConfig.DataSourceEnum;
+import com.pangjie.dynamicDBConfig.TargetDataSource;
 import com.pangjie.jpa.entity.UserInfo;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -16,9 +16,11 @@ public interface UserInfoService {
 
     UserInfo save2(UserInfo userInfo);
 
+    List<UserInfo> saveUsers(UserInfo userInfo);
+
     UserInfo findById2(Integer userId);
 
-    @DataSource(DataSourceNames.ONE)
+    @TargetDataSource(DataSourceEnum.master)
     UserInfo findById(Integer userId);
 
     UserInfo findByOpenid(String openid);
@@ -31,7 +33,11 @@ public interface UserInfoService {
 
     UserInfo findByUserName(String username);
 
+    UserInfo findByUserName2(String username);
+
     Map<String,Object> login(UserInfo userInfo);
 
     UserInfo register(UserInfo userInfo);
+
+    List<UserInfo> findByUserNameOfInside(String userName);
 }

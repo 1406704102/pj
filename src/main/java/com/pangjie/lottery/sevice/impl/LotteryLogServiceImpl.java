@@ -1,6 +1,6 @@
 package com.pangjie.lottery.sevice.impl;
 
-import com.pangjie.eventListener.LotteryLogEvent;
+import com.pangjie.lottery.eventListener.LotteryLogEvent;
 import com.pangjie.lottery.entiy.LotteryLog;
 import com.pangjie.lottery.repository.LotteryLogRepo;
 import com.pangjie.lottery.sevice.LotteryLogService;
@@ -9,13 +9,9 @@ import org.springframework.context.event.EventListener;
 import org.springframework.data.redis.connection.stream.ObjectRecord;
 import org.springframework.data.redis.connection.stream.RecordId;
 import org.springframework.data.redis.connection.stream.StreamRecords;
-import org.springframework.data.redis.connection.stream.StringRecord;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
-
-import java.util.Collections;
-import java.util.HashMap;
 
 @Service
 @AllArgsConstructor
@@ -24,6 +20,11 @@ public class LotteryLogServiceImpl implements LotteryLogService {
     private final LotteryLogRepo lotteryLogRepo;
     private final StringRedisTemplate stringRedisTemplate;
     private final RedisTemplate<String,Object> redisTemplate;
+
+    public LotteryLog add(LotteryLog lotteryLog) {
+        return lotteryLogRepo.save(lotteryLog);
+    }
+
 
     @EventListener
     public void create(LotteryLogEvent logEvent) {

@@ -1,13 +1,12 @@
 package com.pangjie.jpa.service.impl;
 
 
-import com.pangjie.doubleDBConfig.DataSource;
-import com.pangjie.doubleDBConfig.DataSourceNames;
+import com.pangjie.dynamicDBConfig.DataSourceEnum;
+import com.pangjie.dynamicDBConfig.TargetDataSource;
 import com.pangjie.jpa.config.QueryHelp;
 import com.pangjie.springSecurity.JwtTokenUtil;
 import com.pangjie.util.PageUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.poi.ss.formula.ptg.Pxg;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheConfig;
@@ -18,11 +17,8 @@ import com.pangjie.jpa.repository.UserInfoRepo;
 import com.pangjie.jpa.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,10 +27,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -56,15 +48,33 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Value("${jwt.tokenHead}")
     private String tokenHead;
 
+//    private UserInfoServiceImpl getProxy(){
+//        return SpringUtils.getBean(this.getClass());
+//    }
+
     @Override
     public UserInfo save(UserInfo userInfo) {
         return userInfoRepo.save(userInfo);
     }
 
     @Override
-    @DataSource(DataSourceNames.TWO)
+    @TargetDataSource(DataSourceEnum.slave)
+//    @Transactional(rollbackFor = Exception.class)
     public UserInfo save2(UserInfo userInfo) {
-        return userInfoRepo.save(userInfo);
+        UserInfo save = userInfoRepo.save(userInfo);
+        return save;
+    }
+
+    //    @Transactional(rollbackFor = Exception.class)
+//    @DataSource(DataSourceNames.TWO)
+    public List<UserInfo> saveUsers(UserInfo userInfo) {
+        List<UserInfo> userInfos = new ArrayList<>();
+        UserInfo save = save(userInfo);
+        userInfos.add(save);
+//        int i = 1 / 0;
+        UserInfo e = save2(userInfo);
+        userInfos.add(e);
+        return userInfos;
     }
 
     @Override
@@ -101,11 +111,18 @@ public class UserInfoServiceImpl implements UserInfoService {
 //    @Cacheable(value = "userInfo", key = "'user:'")
     public Map<String, Object> queryAll(UserInfo userInfo, Pageable pageable) {
         Page<UserInfo> all = userInfoRepo.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.getPredicate(root, userInfo, criteriaBuilder), pageable);
-         return PageUtil.toPage(all);
+        return PageUtil.toPage(all);
     }
 
     @Override
+    @TargetDataSource(DataSourceEnum.master)
     public UserInfo findByUserName(String username) {
+        return userInfoRepo.findByUserName(username);
+    }
+
+    @Override
+    @TargetDataSource(DataSourceEnum.slave)
+    public UserInfo findByUserName2(String username) {
         return userInfoRepo.findByUserName(username);
     }
 
@@ -133,7 +150,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Override
     public UserInfo register(UserInfo userInfo) {
-        UserInfo newUser = new UserInfo();
+        UserInfo newUser = UserInfo.builder().build();
         BeanUtils.copyProperties(userInfo, newUser);
         //查询是否有相同用户名的用户
         UserInfo byUserName = userInfoRepo.findByUserName(newUser.getUserName());
@@ -144,6 +161,16 @@ public class UserInfoServiceImpl implements UserInfoService {
         String encodePassword = passwordEncoder.encode(userInfo.getPassWord());
         newUser.setPassWord(encodePassword);
         return userInfoRepo.save(newUser);
+    }
+
+    @Override
+    public List<UserInfo> findByUserNameOfInside(String userName) {
+//        UserInfo byUserName2 = this.getProxy().findByUserName2(userName);
+//        UserInfo byUserName = this.getProxy().findByUserName(userName);
+        ArrayList<UserInfo> list = new ArrayList<>();
+//        list.add(byUserName);
+//        list.add(byUserName2);
+        return list;
     }
 
 }

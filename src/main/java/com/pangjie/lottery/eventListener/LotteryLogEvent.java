@@ -1,4 +1,4 @@
-package com.pangjie.eventListener;
+package com.pangjie.lottery.eventListener;
 
 import org.springframework.context.ApplicationEvent;
 

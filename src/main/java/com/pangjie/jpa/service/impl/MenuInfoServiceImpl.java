@@ -1,5 +1,7 @@
 package com.pangjie.jpa.service.impl;
 
+import com.pangjie.jpa.entity.MenuInfo;
+import com.pangjie.jpa.repository.MenuInfoRepo;
 import com.pangjie.jpa.service.MenuInfoService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,11 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class MenuInfoServiceImpl implements MenuInfoService {
-    public PasswordEncoder passwordEncoder;
-    public UserDetailsService userDetailsService;
+    public MenuInfoRepo menuInfoRepo;
+
+    @Override
+    public MenuInfo findById(Integer valueOf) {
+        return menuInfoRepo.findById(valueOf).get();
+    }
+
 }

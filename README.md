@@ -40,8 +40,15 @@ sa-token 权限验证
  * StringRedisTemplate的各种操作
  * key的模糊查询
  * 使用@Cacheable 添加缓存
-### wx
 
+### docker
+* docker-compose 创建容器
+* docker 常用命令
+
+### lottery 
+* 使用redis 和 rocketMQ开发的抽奖
+
+### wx
 * util 微信相关工具类 (获取各种东西,公众号自定义分享签名)
 * pay.xcx 小程序支付
 * view.gzhAuthorize 公众号网页授权流程

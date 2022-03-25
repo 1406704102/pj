@@ -1,7 +1,10 @@
 package com.pangjie.jpa.entity;
 
 import com.pangjie.jpa.config.annotation.Query;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -9,6 +12,9 @@ import java.util.Set;
 
 @Data
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "sys_user_info")
 public class UserInfo {
 

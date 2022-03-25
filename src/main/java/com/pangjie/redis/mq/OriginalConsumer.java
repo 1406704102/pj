@@ -1,6 +1,5 @@
 package com.pangjie.redis.mq;
 
-import com.pangjie.eventListener.LotteryLogEvent;
 import com.pangjie.lottery.entiy.LotteryLog;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;

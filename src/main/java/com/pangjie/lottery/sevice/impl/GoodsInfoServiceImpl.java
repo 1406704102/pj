@@ -1,7 +1,6 @@
 package com.pangjie.lottery.sevice.impl;
 
-import com.pangjie.eventListener.LotteryLogEvent;
-import com.pangjie.jpa.entity.UserInfo;
+import com.pangjie.lottery.eventListener.LotteryLogEvent;
 import com.pangjie.jpa.repository.UserInfoRepo;
 import com.pangjie.lottery.entiy.GoodsInfo;
 import com.pangjie.lottery.repository.GoodsInfoRepo;
@@ -49,8 +48,15 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
     public void reduceStock2(int userId) {
         ArrayList<Integer> old = new ArrayList<>();
         old.add(-1);
-        GoodsInfo lottery = Lottery(old);
-        redisTemplate.opsForValue().increment("Lottery:goodsStock:" + lottery.getId(), -1);
+//        GoodsInfo lottery = Lottery(old);
+        int getId = new Random().nextInt(3)+1;
+        int i= (Integer) redisTemplate.opsForValue().get("Lottery:goodsStock:" + getId);
+        if (i > 0) {
+            Long increment = redisTemplate.opsForValue().increment("Lottery:goodsStock:" +getId, -1);
+            if (increment < 0) {
+                redisTemplate.opsForValue().increment("Lottery:goodsStock:" +getId, 1);
+            }
+        }
 //        userInfoRepo.findById(userId).ifPresent(userInfo->{
 //            userInfo.setLotteryTimes(userInfo.getLotteryTimes() - 1);
 //            userInfoRepo.save(userInfo);
