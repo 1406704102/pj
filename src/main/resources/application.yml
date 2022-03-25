@@ -3,16 +3,16 @@ server:
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.jdbc.Driver
     druid:
       one: #数据源1
-        jdbc-url: jdbc:mysql://oa.xmay.cc:33060/xmayAuthority?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull
+        url: jdbc:mysql://oa.xmay.cc:33060/xmayAuthority?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull
         username: root
         password: Aa123456
       two: #数据源2
-        jdbc-url: jdbc:mysql://oa.xmay.cc:33060/test?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull
+        url: jdbc:mysql://oa.xmay.cc:33060/test?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull
         username: root
         password: Aa123456
-      driver-class-name: com.mysql.jdbc.Driver
     #    url: jdbc:mysql://oa.xmay.cc:33060/xmayAuthority?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull
 #    username: root
 #    password: Aa123456

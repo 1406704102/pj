@@ -1,8 +1,8 @@
 package com.pangjie.jpa.service.impl;
 
 
-import com.pangjie.dynamicDBConfig.DataSourceEnum;
-import com.pangjie.dynamicDBConfig.TargetDataSource;
+import com.pangjie.doubleDBConfig.DataSource;
+import com.pangjie.doubleDBConfig.DataSourceNames;
 import com.pangjie.jpa.config.QueryHelp;
 import com.pangjie.springSecurity.JwtTokenUtil;
 import com.pangjie.util.PageUtil;
@@ -58,7 +58,7 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
-    @TargetDataSource(DataSourceEnum.slave)
+    @DataSource(DataSourceNames.TWO)
 //    @Transactional(rollbackFor = Exception.class)
     public UserInfo save2(UserInfo userInfo) {
         UserInfo save = userInfoRepo.save(userInfo);
@@ -115,13 +115,12 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
-    @TargetDataSource(DataSourceEnum.master)
     public UserInfo findByUserName(String username) {
         return userInfoRepo.findByUserName(username);
     }
 
     @Override
-    @TargetDataSource(DataSourceEnum.slave)
+    @DataSource(DataSourceNames.TWO)
     public UserInfo findByUserName2(String username) {
         return userInfoRepo.findByUserName(username);
     }

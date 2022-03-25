@@ -1,7 +1,5 @@
 package com.pangjie.jpa.service;
 
-import com.pangjie.dynamicDBConfig.DataSourceEnum;
-import com.pangjie.dynamicDBConfig.TargetDataSource;
 import com.pangjie.jpa.entity.UserInfo;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -20,7 +18,6 @@ public interface UserInfoService {
 
     UserInfo findById2(Integer userId);
 
-    @TargetDataSource(DataSourceEnum.master)
     UserInfo findById(Integer userId);
 
     UserInfo findByOpenid(String openid);
