@@ -11,6 +11,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.ApplicationContext;
 import org.springframework.data.domain.Page;
 import com.pangjie.jpa.entity.UserInfo;
 import com.pangjie.jpa.repository.UserInfoRepo;
@@ -26,6 +27,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -37,6 +39,8 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private ApplicationContext applicationContext;
     @Autowired
     private UserDetailsService userDetailsService;
     @Autowired
@@ -65,14 +69,15 @@ public class UserInfoServiceImpl implements UserInfoService {
         return save;
     }
 
-    //    @Transactional(rollbackFor = Exception.class)
+        @Transactional(rollbackFor = Exception.class)
 //    @DataSource(DataSourceNames.TWO)
     public List<UserInfo> saveUsers(UserInfo userInfo) {
+        UserInfoServiceImpl bean = applicationContext.getBean(UserInfoServiceImpl.class);
         List<UserInfo> userInfos = new ArrayList<>();
-        UserInfo save = save(userInfo);
+        UserInfo save = bean.save(userInfo);
         userInfos.add(save);
 //        int i = 1 / 0;
-        UserInfo e = save2(userInfo);
+        UserInfo e = bean.save2(userInfo);
         userInfos.add(e);
         return userInfos;
     }

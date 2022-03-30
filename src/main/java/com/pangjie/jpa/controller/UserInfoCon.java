@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -39,6 +40,13 @@ public class UserInfoCon {
         return new ResponseEntity<>(byId, HttpStatus.OK);
     }
 
+    @GetMapping("/findById")
+    @WithoutToken
+    public ResponseEntity<Object> findById(Integer id) {
+        UserInfo byId = userInfoService.findById2(id);
+        return new ResponseEntity<>(byId, HttpStatus.OK);
+    }
+
     @PutMapping("/add")
     @PreAuthorize("@roleCheck.check('1:系统设置')")
     public ResponseEntity<Object> add(@RequestBody UserInfo userInfo) {
@@ -51,20 +59,22 @@ public class UserInfoCon {
     }
 
     @PutMapping("/add3")
+//    @Transactional(rollbackFor = Exception.class)
     public ResponseEntity<Object> add3(@RequestBody UserInfo userInfo) {
 //        userInfoService.save(userInfo);
 //        userInfoService.save2(userInfo);
+        ;
 //        userInfoService.save2(userInfo);
 //        UserInfo byUserName2 = userInfoService.findByUserName2(userInfo.getUserName());
 //        List<GoodsInfo> all = goodsInfoService.findAll();
-        UserInfo userInfo2 = this.findByUserName2(userInfo.getUserName());
-        UserInfo userInfo1 = this.findByUserName(userInfo.getUserName());
-//        UserInfo userInfo2 = userInfoService.findByUserName(userInfo.getUserName());
-        List list = new ArrayList();
-        list.add(userInfo1);
-        list.add(userInfo2);
+//        UserInfo userInfo2 = this.findByUserName2(userInfo.getUserName());
+//        UserInfo userInfo1 = this.findByUserName(userInfo.getUserName());
+////        UserInfo userInfo2 = userInfoService.findByUserName(userInfo.getUserName());
+//        List list = new ArrayList();
+//        list.add(userInfo1);
+//        list.add(userInfo2);
 //        MenuInfo menuInfo = menuInfoService.findById(Integer.valueOf(userInfo.getUserName()));
-        return new ResponseEntity<>(list,HttpStatus.CREATED);
+        return new ResponseEntity<>(userInfoService.saveUsers(userInfo),HttpStatus.CREATED);
     }
 
     public UserInfo findByUserName(String username) {
