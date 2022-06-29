@@ -19,9 +19,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 @RestController
@@ -33,6 +31,7 @@ public class UserInfoCon {
     private final MenuInfoService menuInfoService;
     private final LotteryLogService lotteryLogService;
     private final GoodsInfoService goodsInfoService;
+    static int size;
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> find(@PathVariable Integer id) {
@@ -44,6 +43,8 @@ public class UserInfoCon {
     @WithoutToken
     public ResponseEntity<Object> findById(Integer id) {
         UserInfo byId = userInfoService.findById2(id);
+        LinkedList<Object> objects = new LinkedList<>();
+
         return new ResponseEntity<>(byId, HttpStatus.OK);
     }
 
@@ -109,5 +110,25 @@ public class UserInfoCon {
     @GetMapping("/code")
     public void getCode(@RequestParam("code") String code) {
         System.out.println(code);
+    }
+
+    public static void main(String[] args) {
+        ArrayList<Object> list = new ArrayList<>();
+        for (int i = 0; i < 110; i++) {
+            list.add(i);
+        }
+        System.out.println(size);
+        ArrayList<Object> list2 = new ArrayList<>();
+        list2.add(1);
+        list2.addAll(list);
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put(null, null);
+        HashSet<String> hashSet = new HashSet<>();
+//        hashMap.put();
+        hashSet.add("1");
+        hashSet.add("1");
+        TreeMap<Integer, Object> treeMap = new TreeMap<>(Comparator.reverseOrder());
+        treeMap.put(1, 1);
+        System.out.println(treeMap);
     }
 }

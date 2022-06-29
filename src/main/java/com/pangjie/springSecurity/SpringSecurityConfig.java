@@ -29,7 +29,7 @@ import java.util.*;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled=true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -103,7 +103,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
             WithoutToken withoutToken = value.getMethodAnnotation(WithoutToken.class);
             // 如果方法上标注了 WithoutToken 注解，就获取该方法的访问全路径
             if (withoutToken != null) {
-                allWithoutToken.addAll(infoEntry.getKey().getPatternsCondition().getPatterns());
+                RequestMappingInfo key = infoEntry.getKey();
+                allWithoutToken.addAll(key.getPatternsCondition().getPatterns());
             }
         }
         return allWithoutToken.toArray(new String[0]);
@@ -119,7 +120,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
             if (user != null) {
 //                List<MenuInfo> permissionList = menuInfoService.findBy(user.getUserId());
 //                return new JwtUser(user,permissionList);
-                return new JwtUser(user,l);
+                return new JwtUser(user, l);
             }
             throw new UsernameNotFoundException("用户名或密码错误");
         };
@@ -127,6 +128,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * 装载BCrypt密码编码器
+     *
      * @return
      */
     @Bean
@@ -138,7 +140,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
      * JWT filter
      */
     @Bean
-    public JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter(){
+    public JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter() {
         return new JwtAuthenticationTokenFilter();
     }
 }

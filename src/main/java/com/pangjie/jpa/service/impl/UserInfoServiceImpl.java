@@ -88,6 +88,7 @@ public class UserInfoServiceImpl implements UserInfoService {
     public UserInfo findById2(Integer userId) {
         Optional<UserInfo> byId = userInfoRepo.findById(userId);
         return byId.get();
+
     }
 
     @Override
