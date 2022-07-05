@@ -97,3 +97,6 @@ sa-token 权限验证
 ### sql
 
 * sql 
+
+### preventDuplication
+* 使用@PreventDuplication(expireSeconds = 1)  防止重复提交
