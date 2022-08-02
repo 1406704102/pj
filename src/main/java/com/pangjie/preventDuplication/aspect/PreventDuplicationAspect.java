@@ -37,7 +37,7 @@ public class PreventDuplicationAspect {
     /**
      * 定义切点
      */
-    @Pointcut("@annotation(me.zhengjie.annotation.PreventDuplication)")
+    @Pointcut("@annotation(com.pangjie.preventDuplication.annotation.PreventDuplication)")
     public void preventDuplication() {
     }
 
