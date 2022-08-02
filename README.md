@@ -99,4 +99,4 @@ sa-token 权限验证
 * sql 
 
 ### preventDuplication
-* 使用@PreventDuplication(expireSeconds = 1)  防止重复提交
+* 使用  @PreventDuplication(value = "questionInfo.query",expireSeconds = 100)  防止重复提交
