@@ -61,7 +61,7 @@ public class PreventDuplicationAspect {
 
         // 获取token以及方法标记，生成redisKey和redisValue
         String token = request.getHeader("Authorization");
-        String redisKey = "PREVENT_DUPLICATION_PREFIX"
+        String redisKey = "PREVENT_DUPLICATION_PREFIX:"
                 .concat(token)
                 .concat(getMethodSign(method, joinPoint.getArgs()));
         String redisValue = redisKey.concat(annotation.value()).concat("submit duplication");
