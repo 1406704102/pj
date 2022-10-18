@@ -1,4 +1,4 @@
-package com.pangjie.doubleDBConfig;
+package com.pangjie.doubleDBConfig.annotation;
 
 import java.lang.annotation.*;
 

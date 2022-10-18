@@ -1,5 +1,7 @@
-package com.pangjie.doubleDBConfig;
+package com.pangjie.doubleDBConfig.aspect;
 
+import com.pangjie.doubleDBConfig.DynamicDataSource;
+import com.pangjie.doubleDBConfig.annotation.DataSource;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -28,7 +30,7 @@ public class DataSourceAspect implements Ordered {
     /**
      * 切点: 所有配置 DataSource 注解的方法
      */
-    @Pointcut("@annotation(com.pangjie.doubleDBConfig.DataSource)")
+    @Pointcut("@annotation(com.pangjie.doubleDBConfig.annotation.DataSource)")
     public void dataSourcePointCut() {}
 
     @Around("dataSourcePointCut()")

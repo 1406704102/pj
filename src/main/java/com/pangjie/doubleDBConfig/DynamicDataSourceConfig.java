@@ -1,6 +1,7 @@
 package com.pangjie.doubleDBConfig;
 
 import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
+import com.pangjie.doubleDBConfig.annotation.DataSourceNames;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

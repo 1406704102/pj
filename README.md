@@ -19,6 +19,7 @@ sa-token 权限验证
 
 多数据源
 * 使用aop实现的多数据源实例
+* 使用aop和redis实现的多数据库的事物
 * 使用方法在jpa 包中的 实现类
 
 ### springSecurity

@@ -1,8 +1,8 @@
 package com.pangjie.jpa.service.impl;
 
 
-import com.pangjie.doubleDBConfig.DataSource;
-import com.pangjie.doubleDBConfig.DataSourceNames;
+import com.pangjie.doubleDBConfig.annotation.DataSource;
+import com.pangjie.doubleDBConfig.annotation.DataSourceNames;
 import com.pangjie.jpa.config.QueryHelp;
 import com.pangjie.springSecurity.JwtTokenUtil;
 import com.pangjie.util.PageUtil;
