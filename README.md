@@ -33,8 +33,8 @@ sa-token 权限验证
 * 使用注解/原生sql查询
 * 多对多映射关系
 ### nginx
-* nginx.conf 配置文件
-* xl 限流写法
+* nginx.conf 配置文件(带负载均衡)
+* 限流.txt 限流写法
 
 ### redis
  * redis 配置
@@ -81,7 +81,7 @@ sa-token 权限验证
   * ip
   * jackson
   * 二维码
-  * BigDecimal
+  * 金钱
 
 ### linux
 
