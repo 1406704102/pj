@@ -27,6 +27,9 @@ sa-token 权限验证
 * 根据注解判断方法是可以匿名访问
 * 使用PreAuthorize("")验证权限
 
+### 主动抛出的全局错误
+* pjException
+
 ### jpa
 
 * 动态查询
@@ -82,6 +85,7 @@ sa-token 权限验证
   * jackson
   * 二维码
   * 金钱
+  * md5
 
 ### linux
 
