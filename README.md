@@ -68,6 +68,7 @@ sa-token 权限验证
 * view.like 点赞
 * view.myHttp 发起请求封装
 * webview index.html 网页跳转小程序
+* qrCode 获取小程序二维码并且 拼接其他图片
 
 ### dy
 * 抖音授权登录;上传发布视频
