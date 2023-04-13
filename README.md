@@ -44,6 +44,7 @@ sa-token 权限验证
  * StringRedisTemplate的各种操作
  * key的模糊查询
  * 使用@Cacheable 添加缓存
+ * 使用lua脚本
 
 ### docker
 * docker-compose 创建容器

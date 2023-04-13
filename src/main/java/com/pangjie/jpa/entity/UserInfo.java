@@ -18,10 +18,11 @@ import java.util.Set;
 @Table(name = "sys_user_info")
 public class UserInfo {
 
+    public static String string = "11";
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer id = 1;
 
     @Query
     @Column(name = "user_name")

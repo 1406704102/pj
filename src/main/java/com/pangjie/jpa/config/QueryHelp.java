@@ -30,7 +30,7 @@ import java.util.List;
 @SuppressWarnings({"unchecked","all"})
 public class QueryHelp {
 
-    public static <R, Q> Predicate getPredicate(Root<R> root, Q query, CriteriaBuilder cb) {
+    public static <R, T> Predicate getPredicate(Root<R> root, T query, CriteriaBuilder cb) {
         List<Predicate> list = new ArrayList<>();
         if(query == null){
             return cb.and(list.toArray(new Predicate[0]));

@@ -18,6 +18,7 @@ import com.pangjie.jpa.repository.UserInfoRepo;
 import com.pangjie.jpa.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
@@ -29,6 +30,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -116,7 +121,8 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
 //    @Cacheable(value = "userInfo", key = "'user:'")
     public Map<String, Object> queryAll(UserInfo userInfo, Pageable pageable) {
-        Page<UserInfo> all = userInfoRepo.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.getPredicate(root, userInfo, criteriaBuilder), pageable);
+//        Page<UserInfo> all = userInfoRepo.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.getPredicate(root, userInfo, criteriaBuilder), pageable);
+        Page<UserInfo> all = userInfoRepo.findAll((Specification<UserInfo>) (root, criteriaQuery, criteriaBuilder) -> QueryHelp.getPredicate(root,userInfo,criteriaBuilder), pageable);
         return PageUtil.toPage(all);
     }
 

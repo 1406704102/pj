@@ -1,22 +1,34 @@
 package com.pangjie.redis;
 
+import com.pangjie.springSecurity.annotation.WithoutToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.Cursor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+@RestController
+@RequestMapping("/redis")
 public class RedisTemplateTest {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
     @Autowired
     private RedisTemplate redisTemplate;
+
+    @Autowired
+    private DefaultRedisScript<Boolean> redisScript;
+
 
     public void stringTemplate() {
         //向redis里存入数据和设置缓存时间
@@ -61,5 +73,19 @@ public class RedisTemplateTest {
                 throw new RuntimeException(e);
             }
         });
+    }
+
+    @GetMapping("/redisLua")
+    @WithoutToken
+    public ResponseEntity<Object> redisLua() {
+        List<String> keys = new ArrayList<>();
+        List<String> values = new ArrayList<>();
+        keys.add("key1");
+        keys.add("key2");
+        values.add("1");
+        values.add("2");
+        Boolean result = stringRedisTemplate.execute(redisScript, keys, values.toArray());
+        System.out.println(result);
+        return null;
     }
 }
