@@ -21,6 +21,11 @@ import org.springframework.stereotype.Service;
 public class AsyncMessageListener implements RocketMQListener<GoodsInfo> {
     @Override
     public void onMessage(GoodsInfo goodsInfo) {
-        log.info("消费到了异步消息: message = {}", JSON.toJSONString(goodsInfo));
+        try {
+            log.info("消费到了异步消息: message = {}", JSON.toJSONString(goodsInfo));
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

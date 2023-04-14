@@ -16,7 +16,7 @@ import cn.dev33.satoken.exception.NotPermissionException;
 /**
  * 全局异常处理 
  */
-@RestControllerAdvice // 可指定包前缀，比如：(basePackages = "com.pj.admin")
+//@RestControllerAdvice // 可指定包前缀，比如：(basePackages = "com.pj.admin")
 @Slf4j
 public class GlobalException {
 

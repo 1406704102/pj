@@ -142,12 +142,13 @@ public class UserInfoServiceImpl implements UserInfoService {
         String token = null;
         try {
             UserDetails userDetails = userDetailsService.loadUserByUsername(userInfo.getUserName());
-            List<String> collect = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
+            Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
+            List<String> collect = authorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
 
             if (!passwordEncoder.matches(userInfo.getPassWord(), userDetails.getPassword())) {
                 throw new BadCredentialsException("密码不正确");
             }
-            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, authorities);
             SecurityContextHolder.getContext().setAuthentication(authentication);
             token = jwtTokenUtil.generateToken(userDetails);
         } catch (AuthenticationException e) {

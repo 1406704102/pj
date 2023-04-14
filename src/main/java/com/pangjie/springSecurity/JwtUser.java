@@ -3,6 +3,7 @@ package com.pangjie.springSecurity;
 import com.pangjie.jpa.entity.MenuInfo;
 import com.pangjie.jpa.entity.RoleInfo;
 import com.pangjie.jpa.entity.UserInfo;
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,17 +13,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
+@AllArgsConstructor
 public class JwtUser implements UserDetails {
 
     private UserInfo userInfo;
-    private List<MenuInfo> menuInfoList;
-    
-    public JwtUser(UserInfo userInfo, List<MenuInfo> menuInfoList) {
-        this.userInfo = userInfo;
-        this.menuInfoList = menuInfoList;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -35,6 +30,11 @@ public class JwtUser implements UserDetails {
                     .collect(Collectors.toList()));
         });
         return collect;
+    }
+
+
+    public UserInfo getUserInfo() {
+        return this.userInfo;
     }
 
     @Override

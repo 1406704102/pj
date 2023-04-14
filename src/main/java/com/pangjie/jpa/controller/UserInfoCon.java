@@ -108,6 +108,7 @@ public class UserInfoCon {
     }
 
     @GetMapping("/code")
+    @PreAuthorize("@roleCheck.check('123')")
     public void getCode(@RequestParam("code") String code) {
         System.out.println(code);
     }

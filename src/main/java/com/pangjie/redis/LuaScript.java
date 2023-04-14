@@ -20,7 +20,7 @@ public class LuaScript {
      * 库存扣减脚本
      */
     @Bean
-    public DefaultRedisScript<Boolean> luaScript() {
+    public DefaultRedisScript<Boolean> script() {
         DefaultRedisScript<Boolean> redisScript = new DefaultRedisScript<>();
         redisScript.setScriptSource(new ResourceScriptSource(new ClassPathResource("lua/redis/test.lua")));
         redisScript.setResultType(Boolean.class);

@@ -116,11 +116,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         //获取登录用户信息
         return username -> {
             UserInfo user = userInfoService.findByUserName(username);
-            List<MenuInfo> l = new ArrayList<>();
             if (user != null) {
-//                List<MenuInfo> permissionList = menuInfoService.findBy(user.getUserId());
-//                return new JwtUser(user,permissionList);
-                return new JwtUser(user, l);
+                return new JwtUser(user);
             }
             throw new UsernameNotFoundException("用户名或密码错误");
         };
