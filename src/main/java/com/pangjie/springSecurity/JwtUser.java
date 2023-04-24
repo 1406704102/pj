@@ -5,6 +5,7 @@ import com.pangjie.jpa.entity.RoleInfo;
 import com.pangjie.jpa.entity.UserInfo;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -23,6 +24,7 @@ public class JwtUser implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<RoleInfo> roleInfos = userInfo.getRoleInfos();
         List<SimpleGrantedAuthority> collect = new ArrayList<>();
+//        collect.add(new SimpleGrantedAuthority("ROLE_Admin"));
         //获得所有权限名称
         roleInfos.forEach(f->{
             List<MenuInfo> menus = f.getMenus();

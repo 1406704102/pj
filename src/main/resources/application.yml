@@ -51,5 +51,5 @@ OBS:
 jwt:
   tokenHeader: PJ-Token #JWT存储的请求头
   tokenHead: Bearer  #令牌前缀
-  secret: pangjieAdminSecretpangjieAdminSecretpangjieAdminSecretpangjieAdminSecretpangjieAdminSecretpangjieAdminSecret #JWT加解密使用的密钥
+  secret: ZmQ0ZGI5NjQ0MDQwY2I4MjMxY2Y3ZmI3MjdhN2ZmMjNhODViOTg1ZGE0NTBjMGM4NDA5NzYxMjdjOWMwYWRmZTBlZjlhNGY3ZTg4Y2U3YTE1ODVkZDU5Y2Y3OGYwZWE1NzUzNWQ2YjFjZDc0NGMxZWU2MmQ3MjY1NzJmNTE0MzI #JWT加解密使用的密钥
   expiration: 86400 #JWT的超期限时间秒(60*60*24)

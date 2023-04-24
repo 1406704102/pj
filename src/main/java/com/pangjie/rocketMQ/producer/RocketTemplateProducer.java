@@ -93,7 +93,7 @@ public class RocketTemplateProducer {
      * return void
      */
     public void syncSendMessages(String topic, List<Message<?>> messageList, long timeout) {
-        rocketMQTemplate.syncSend(topic, messageList, timeout);
+        SendResult sendResult = rocketMQTemplate.syncSend(topic, messageList, timeout);
         log.info("同步发送批量消息完成：message = {}", JSON.toJSONString(messageList));
     }
 

@@ -2,6 +2,7 @@ package com.pangjie.redis;
 
 import com.pangjie.springSecurity.annotation.WithoutToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.Cursor;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -15,8 +16,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @RestController
@@ -28,7 +31,7 @@ public class RedisTemplateTest {
     private RedisTemplate redisTemplate;
 
     @Autowired
-    private DefaultRedisScript<Boolean> redisScript;
+    private Map<String, DefaultRedisScript<Boolean>> luaBean;
 
 
     public void stringTemplate() {
@@ -77,6 +80,7 @@ public class RedisTemplateTest {
     }
 
     @GetMapping("/redisLua")
+//    @PreAuthorize("@roleCheck.check('1:首页')")
     @WithoutToken
     public ResponseEntity<Object> redisLua() {
         List<String> keys = new ArrayList<>();
@@ -85,8 +89,10 @@ public class RedisTemplateTest {
         keys.add("key2");
         values.add("1");
         values.add("2");
-        Boolean result = stringRedisTemplate.execute(redisScript, keys, values.toArray());
+        Boolean result = stringRedisTemplate.execute(luaBean.get("lua1"), keys, values.toArray());
+        Boolean result2 = stringRedisTemplate.execute(luaBean.get("lua2"), keys, values.toArray());
         System.out.println(result);
+        System.out.println(result2);
         return null;
     }
 }

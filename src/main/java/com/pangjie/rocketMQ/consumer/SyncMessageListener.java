@@ -24,4 +24,6 @@ public class SyncMessageListener implements RocketMQListener<GoodsInfo> {
     public void onMessage(GoodsInfo goodsInfo) {
         log.info("消费到了同步消息: message = {}", JSON.toJSONString(goodsInfo));
     }
+
+
 }

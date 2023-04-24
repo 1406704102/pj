@@ -2,7 +2,10 @@ package com.pangjie.springSecurity;
 
 import com.pangjie.jpa.entity.MenuInfo;
 import com.pangjie.jpa.entity.RoleInfo;
+import com.pangjie.jpa.entity.UserInfo;
+import com.pangjie.jpa.service.UserInfoService;
 import com.pangjie.util.IpUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,8 +29,9 @@ import java.util.stream.Collectors;
  */
 @Service
 public class RoleCheck {
+
     public boolean check(String role) {
-         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         JwtUser userDetails = (JwtUser) authentication.getPrincipal();
         Set<RoleInfo> roleInfos = userDetails.getUserInfo().getRoleInfos();
         List<String> collect = new ArrayList<>();
@@ -36,7 +40,6 @@ public class RoleCheck {
                 collect.add(menu.getId() + ":" + menu.getTitle());
             }
         }
-//        List<String> collect = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
         return collect.stream().anyMatch(role::contains);
     }
 

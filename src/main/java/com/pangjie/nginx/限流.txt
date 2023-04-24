@@ -7,7 +7,7 @@
 Nginx中使用ngx_http_limit_req_module模块来限制的访问频率，限制的原理实质是基于漏桶算法原理来实现的。在nginx.conf配置文件中可以使用limit_req_zone命令及limit_req命令限制单个IP的请求处理频率。
 
 
-	#定义限流维度，一个用户一分钟一个请求进来，多余的全部漏掉
+	#定义限流维度，一分钟一个请求进来，多余的全部漏掉
 	limit_req_zone $binary_remote_addr zone=zone:10m rate=1r/m;
 
 	#绑定限流维度

@@ -1,9 +1,11 @@
 package com.pangjie.springSecurity;
 
+import com.pangjie.jpa.entity.UserInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,11 +31,13 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     private JwtTokenUtil jwtTokenUtil;
     @Autowired
     private UserDetailsService userDetailsService;
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
         String authHeader = httpServletRequest.getHeader(this.tokenHeader);
-        if (authHeader!=null) {
+        if (authHeader != null) {
             if (StringUtils.isNotBlank(authHeader) && authHeader.startsWith(this.tokenHead)) {
                 String authToken = authHeader.substring(this.tokenHead.length());
                 String username = jwtTokenUtil.getUserNameFromToken(authToken);
@@ -52,6 +56,22 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
                 }
             }
         }
+        //直接从redis中获取token 并验证
+//        else {
+//            String token = "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiI2NGFkYjQxOWViMjA0MzliYTgwYmQzYjU1ZGNlNWQwMCIsImF1dGgiOiJhZG1pbiIsInN1YiI6ImFkbWluIn0.IfxEUd_wnU8Q4Cr5adU-llfIsmztypQGUlsqxmhLjcY6dA4UIAStwVvCid4kaQdxNkX3f2AXmp_XnIsvWUXhZg";
+//            stringRedisTemplate.opsForValue().get("online-token-" +
+//                    token);
+//            String username = jwtTokenUtil.getUserNameFromToken(token);
+//            UserInfo userInfo = new UserInfo();
+//            userInfo.setUserName(username);
+//            JwtUser jwtUser = new JwtUser(userInfo);
+//            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+//                    jwtUser, null, null);
+//            authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(
+//                    httpServletRequest));
+//            log.info("authenticated user " + username + ", setting security context");
+//            SecurityContextHolder.getContext().setAuthentication(authentication);
+//        }
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 }

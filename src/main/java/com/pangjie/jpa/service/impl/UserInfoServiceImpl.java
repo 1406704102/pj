@@ -23,6 +23,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -97,7 +98,7 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
-    @Cacheable(key = "'user:'+userId")
+//    @Cacheable(key = "'user:'+#p0")
     public UserInfo findById(Integer userId) {
         Optional<UserInfo> byId = userInfoRepo.findById(userId);
         return byId.get();
@@ -143,7 +144,6 @@ public class UserInfoServiceImpl implements UserInfoService {
         try {
             UserDetails userDetails = userDetailsService.loadUserByUsername(userInfo.getUserName());
             Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
-            List<String> collect = authorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
 
             if (!passwordEncoder.matches(userInfo.getPassWord(), userDetails.getPassword())) {
                 throw new BadCredentialsException("密码不正确");
