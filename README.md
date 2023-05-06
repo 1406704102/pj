@@ -88,6 +88,7 @@ sa-token 权限验证
   * 二维码
   * 金钱
   * md5
+  * httpClient
 
 ### linux
 
