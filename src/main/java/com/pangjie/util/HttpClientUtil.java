@@ -2,8 +2,6 @@ package com.pangjie.util;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -18,7 +16,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class HttpClientUtil {
@@ -35,9 +32,6 @@ public class HttpClientUtil {
 
     }
 
-    /**
-     * 从连接池中获取httpClient连接
-     */
     public static CloseableHttpClient getHttpClient(PoolingHttpClientConnectionManager pool) {
         //设置请求参数配置，创建连接时间、从连接池获取连接时间、数据传输时间、是否测试连接可用、构建配置对象
         RequestConfig requestConfig = RequestConfig.custom()
@@ -83,7 +77,16 @@ public class HttpClientUtil {
         return result;
     }
 
+
+
     public static String getData(String url) {
+        /**
+         * @Author PangJie___
+         * @Description
+         * @Date 10:23 2023/5/26
+         * @param * @param url
+         * @return * @return {@link String }
+         */
         CloseableHttpClient httpClient = getHttpClient(pool);
         String result = "";
         // 创建httpGet远程连接实例

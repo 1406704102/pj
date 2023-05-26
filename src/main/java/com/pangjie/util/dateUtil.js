@@ -25,3 +25,41 @@ function getBeforeDay(beforeDays) {
     }
     return data;
 }
+
+/**
+ * @Author PangJie___
+ * @Description  计算传秒数的倒计时【天、时、分、秒】
+ * @Date 10:16 2023/5/26
+ * @param seconds
+ * @return {{day : *, hours : *, minutes : *, seconds : *}}
+ */
+const countTimeDown = seconds => {
+    const leftTime = time => {
+        if (time < 10) time = "0" + time;
+        return time + "";
+    };
+    return {
+        day: leftTime(parseInt(seconds / 60 / 60 / 24, 10)),
+        hours: leftTime(parseInt((seconds / 60 / 60) % 24, 10)),
+        minutes: leftTime(parseInt((seconds / 60) % 60, 10)),
+        seconds: leftTime(parseInt(seconds % 60, 10))
+    };
+};
+
+/**
+ * 计算当前时间到第二天0点的倒计时[秒]
+ * @returns {number}
+ */
+const theNextDayTime = () => {
+    const nowDate = new Date();
+    const time =
+        new Date(
+            nowDate.getFullYear(),
+            nowDate.getMonth(),
+            nowDate.getDate() + 1,
+            0,
+            0,
+            0
+        ).getTime() - nowDate.getTime();
+    return parseInt(time / 1000);
+};
