@@ -17,25 +17,37 @@ package com.pangjie.jpa.config;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
+import com.pangjie.jpa.config.annotation.DataPermission;
 import com.pangjie.jpa.config.annotation.Query;
-import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
-import javax.persistence.criteria.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-@SuppressWarnings({"unchecked","all"})
+@SuppressWarnings({"unchecked", "all"})
 public class QueryHelp {
 
     public static <R, T> Predicate getPredicate(Root<R> root, T query, CriteriaBuilder cb) {
         List<Predicate> list = new ArrayList<>();
-        if(query == null){
+        if (query == null) {
             return cb.and(list.toArray(new Predicate[0]));
         }
 
+        DataPermission permission = query.getClass().getAnnotation(DataPermission.class);
+        if (permission != null) {
+            //数据权限集合
+            ArrayList<String> permissionList = new ArrayList<>();
+            //如果指定了过滤字段
+            if (StringUtils.isNotBlank(permission.fieldName())) {
+                list.add(cb.in(root.get(permission.fieldName())).value(permissionList));
+            }
+        }
         try {
             //获取所有属性
             List<Field> fields = getAllFields(query.getClass(), new ArrayList<>());
@@ -52,16 +64,20 @@ public class QueryHelp {
                     if (ObjectUtil.isNull(val) || "".equals(val)) {
                         continue;
                     }
-                    Join join = null;
                     switch (q.type()) {
                         case EQUAL:
-                            list.add(cb.equal(root.get(attributeName),val));
+                            list.add(cb.equal(root.get(attributeName), val));
                             break;
-//                        case IN:
-//                            if (CollUtil.isNotEmpty((Collection<Long>)val)) {
-//                                list.add(root.get(attributeName).in((Collection<Long>) val));
-//                            }
-//                            break;
+                        case IN:
+                            if (CollUtil.isNotEmpty((Collection<Object>) val)) {
+                                list.add(cb.in(root.get(attributeName)).value((Collection<Object>) val));
+                            }
+                            break;
+                        case NOT_IN:
+                            if (CollUtil.isNotEmpty((Collection<Object>) val)) {
+                                list.add(cb.in(root.get(attributeName)).value((Collection<Object>) val).not());
+                            }
+                            break;
                         case NOT_EQUAL:
                             list.add(cb.notEqual(root.get(attributeName), val));
                             break;
@@ -72,11 +88,17 @@ public class QueryHelp {
                             list.add(cb.isNull(root.get(attributeName)));
                             break;
                         case BETWEEN:
-                            List<Object> between = new ArrayList<>((List<Object>)val);
+                            List<Object> between = new ArrayList<>((List<Object>) val);
+//                            先判断是不是两个参数
+                            if (between.size() == 2) {
 //                            先判断是什么类型
-//                            cb.between(root.get(attributeName), 1, 2);
+                                cb.between(root.get(attributeName)
+                                        .as((Class<? extends Comparable>) between.get(0).getClass()),
+                                        (Comparable) between.get(0), (Comparable) between.get(1));
+                            }
                             break;
-                        default: break;
+                        default:
+                            break;
                     }
                 }
             }
