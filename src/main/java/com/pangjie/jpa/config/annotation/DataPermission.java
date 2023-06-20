@@ -22,7 +22,7 @@ import java.lang.annotation.Target;
 
 /**
  * @Author PangJie___
- * @Description 数据权限注解 详情看QueryHelp
+ * @Description 数据权限注解 根据fieldName字段查询 详情看QueryHelp
  * @Date 16:47 2023/6/12
  */
 @Target(ElementType.TYPE)
