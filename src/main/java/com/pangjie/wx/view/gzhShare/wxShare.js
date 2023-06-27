@@ -86,3 +86,14 @@ function act(that,url) {
     })
   })
 }
+// 后台方法
+//     @GetMapping("/createJsapiSignature")
+//     public ResponseEntity<Object> createJsapiSignature(String url) {
+//         try {
+//             WxJsapiSignature jsapiSignature = wxService.createJsapiSignature(url);
+//             return new ResponseEntity<>(jsapiSignature, HttpStatus.OK);
+//         } catch (WxErrorException e) {
+//             e.printStackTrace();
+//         }
+//         return null;
+//     }
