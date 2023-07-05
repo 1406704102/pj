@@ -53,7 +53,7 @@ sa-token 权限验证
 ### lottery 
 * 使用redis 和 rocketMQ开发的抽奖
 
-### wx
+### wx (建议使用 wxJava)
 * util 微信相关工具类 (获取各种东西,公众号自定义分享签名)
 * pay.xcx 小程序支付
 * view.gzhAuthorize 公众号网页授权流程
@@ -111,4 +111,9 @@ sa-token 权限验证
 * sql 
 
 ### preventDuplication
+
 * 使用  @PreventDuplication(value = "questionInfo.query",expireSeconds = 100)  防止重复提交
+
+### httpSignCheck
+
+* 接口安全验证
