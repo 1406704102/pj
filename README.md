@@ -58,10 +58,10 @@ sa-token 权限验证
 * pay.xcx 小程序支付
 * view.gzhAuthorize 公众号网页授权流程
     1. 根据缓存中是否有用户信息来判断用户是否授权过
-    1. 使用钩子函数(除了授权页面 全都需要window.location.href = 跳转微信获取code 链接)
-    1. 如果没有授权则使用 window.location.href = 跳转微信获取code 链接,并在缓存中保存想要去的路由
-    1. 返回链接是vue 的前端项目的授权页面,获取微信传来的code,传到后台获取用户信息,成功后返回给授权页并存入缓存
-    1. 保存成功后重定向到缓存中保存的路由
+    2. 使用钩子函数(除了授权页面 全都需要window.location.href = 跳转微信获取code 链接)
+    3. 如果没有授权则使用 window.location.href = 跳转微信获取code 链接,并在缓存中保存想要去的路由
+    4. 返回链接是vue 的前端项目的授权页面,获取微信传来的code,传到后台获取用户信息,成功后返回给授权页并存入缓存
+    5. 保存成功后重定向到缓存中保存的路由
 * view.gzhShare 微信公众号网页自定义分享 (引入 npm install weixin-js-sdk)
 * view.xcxAuthorize 小程序授权
 * view.webview webview 网页返回 微信小程序
@@ -70,6 +70,7 @@ sa-token 权限验证
 * view.myHttp 发起请求封装
 * webview index.html 网页跳转小程序
 * qrCode 获取小程序二维码并且 拼接其他图片
+* uploadFile 上传文件
 
 ### dy
 * 抖音授权登录;上传发布视频
