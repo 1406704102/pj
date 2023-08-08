@@ -2,7 +2,6 @@ package com.pangjie.redis;
 
 import com.pangjie.springSecurity.annotation.WithoutToken;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.Cursor;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -11,12 +10,10 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -59,6 +56,9 @@ public class RedisTemplateTest {
         stringRedisTemplate.opsForSet().isMember("key", "1");
         //根据key获取set集合
         stringRedisTemplate.opsForSet().members("key");
+
+        //获取list长度
+        stringRedisTemplate.opsForList().size("key");
         //验证有效时间
         Long expire = redisTemplate.boundHashOps("key").getExpire();
         System.out.println("redis有效时间：" + expire + "S");

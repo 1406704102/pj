@@ -1,15 +1,12 @@
 package com.pangjie.redis;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.scripting.support.ResourceScriptSource;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /*
@@ -36,6 +33,10 @@ public class LuaScript {
         redisScript2.setScriptSource(new ResourceScriptSource(new ClassPathResource("lua/redis/test2.lua")));
         redisScript2.setResultType(Boolean.class);
         hashMap.put("lua2", redisScript2);
+        DefaultRedisScript<Boolean> redisScript3 = new DefaultRedisScript<>();
+        redisScript3.setScriptSource(new ResourceScriptSource(new ClassPathResource("lua/redis/like.lua")));
+        redisScript3.setResultType(Boolean.class);
+        hashMap.put("likeLua", redisScript3);
         return hashMap;
     }
 

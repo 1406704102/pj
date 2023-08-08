@@ -2,6 +2,9 @@ package com.pangjie.util;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.ListIterator;
 
 /**
  * 简化BigDecimal计算的小工具类
@@ -175,4 +178,35 @@ public class BigDecimalUtil {
         return b1.compareTo(b2);
     }
 
+    public static void main(String[] args) {
+        ArrayList<String> objects = new ArrayList<>();
+        objects.add("1");
+        objects.add("2");
+        objects.add("3");
+        objects.add("4");
+
+        ListIterator<String> stringListIterator = objects.listIterator();
+        //正向遍历
+        while (stringListIterator.hasNext()) {
+            System.out.println(stringListIterator.next());
+            //替换
+            stringListIterator.set(stringListIterator.nextIndex() + "-");
+        }
+        //反向遍历
+        while (stringListIterator.hasPrevious()) {
+            System.out.println(stringListIterator.previous());
+        }
+//        System.out.println(objects);
+        System.out.println("===========================");
+        Iterator<String> iterator = objects.iterator();
+        while (iterator.hasNext()) {
+            System.out.println(iterator.next());
+//            objects.set(3,"11");
+//            iterator.remove();
+        }
+        objects.forEach(f->{
+            objects.add("1");
+        });
+        System.out.println(objects);
+    }
 }
