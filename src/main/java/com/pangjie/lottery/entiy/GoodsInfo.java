@@ -26,4 +26,7 @@ public class GoodsInfo {
 
     @Column(name = "goods_stock")
     private Integer goodsStock;
+
+    @Transient
+    private Integer goodsProbability;
 }

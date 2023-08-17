@@ -7,7 +7,6 @@ import com.pangjie.rocketMQ.producer.RocketTemplateProducer;
 import com.pangjie.springSecurity.annotation.WithoutToken;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,7 +52,9 @@ public class RocketTemplateController {
                 .goodsName("goodsName-sync")
                 .goodsStock(100)
                 .build();
-        this.producer.syncSendMessage("sync-message", goodsInfo);
+        for (int i = 0; i < 10; i++) {
+            this.producer.syncSendMessage("sync-message", goodsInfo);
+        }
         return "success：消息已同步发送：message = " + JSON.toJSONString(goodsInfo);
     }
 

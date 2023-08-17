@@ -4,26 +4,25 @@ package com.pangjie.jpa.service.impl;
 import com.pangjie.doubleDBConfig.annotation.DataSource;
 import com.pangjie.doubleDBConfig.annotation.DataSourceNames;
 import com.pangjie.jpa.config.QueryHelp;
+import com.pangjie.jpa.entity.UserInfo;
+import com.pangjie.jpa.repository.UserInfoRepo;
+import com.pangjie.jpa.service.UserInfoService;
 import com.pangjie.springSecurity.JwtTokenUtil;
 import com.pangjie.util.PageUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.ApplicationContext;
 import org.springframework.data.domain.Page;
-import com.pangjie.jpa.entity.UserInfo;
-import com.pangjie.jpa.repository.UserInfoRepo;
-import com.pangjie.jpa.service.UserInfoService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -31,12 +30,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -123,7 +117,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 //    @Cacheable(value = "userInfo", key = "'user:'")
     public Map<String, Object> queryAll(UserInfo userInfo, Pageable pageable) {
 //        Page<UserInfo> all = userInfoRepo.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.getPredicate(root, userInfo, criteriaBuilder), pageable);
-        Page<UserInfo> all = userInfoRepo.findAll((Specification<UserInfo>) (root, criteriaQuery, criteriaBuilder) -> QueryHelp.getPredicate(root,userInfo,criteriaBuilder), pageable);
+        Page<UserInfo> all = userInfoRepo.findAll((Specification<UserInfo>) (root, criteriaQuery, criteriaBuilder) -> QueryHelp.getPredicate(root, userInfo, criteriaBuilder), pageable);
         return PageUtil.toPage(all);
     }
 
@@ -133,7 +127,7 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
-    @DataSource(DataSourceNames.TWO)
+    @DataSource(DataSourceNames.ONE)
     public UserInfo findByUserName2(String username) {
         return userInfoRepo.findByUserName(username);
     }
