@@ -59,4 +59,12 @@ public class UserInfo {
 
     @Column(name = "lottery_times", columnDefinition = "0")
     private Integer lotteryTimes;
+
+    @Transient
+    private Integer userIntegral1;
+    @Transient
+    private String userId;
+
+    @Transient
+    private Integer userIntegral2;
 }

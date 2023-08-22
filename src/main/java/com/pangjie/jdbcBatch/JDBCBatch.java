@@ -1,75 +1,77 @@
 package com.pangjie.jdbcBatch;
 
-import com.pangjie.jpa.entity.UserInfo;
-
 import java.sql.*;
-import java.time.Instant;
-import java.util.ArrayList;
+import java.util.UUID;
 
 public class JDBCBatch {
 
     public static void main(String[] args) {
-        String url = "jdbc:mysql://81.68.124.103:3306/test?" +
+        String url = "jdbc:mysql://rm-m5esk36093uv9v848bo.mysql.rds.aliyuncs.com:3306/emporium_admin_test?" +
                 "serverTimezone=Asia/Shanghai&characterEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull&" +
                 "rewriteBatchedStatements=true";
-        String username = "root";
-        String password = "lilishop";
+        String username = "emroot";
+        String password = "em@ROOT130";
 
         //定义连接、statement对象
         Connection conn = null;
         PreparedStatement pstm = null;
+        PreparedStatement pstm2 = null;
 //        PreparedStatement pstm2 = null;
         try {
             //加载jdbc驱动
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName("com.mysql.jdbc.Driver");
             //连接mysql
             conn = DriverManager.getConnection(url, username, password);
             //将自动提交关闭
             conn.setAutoCommit(false);
 
-            String select = "select id, pass_word from sys_user_info";
+            String select = "select user_id, user_integral_1, user_integral_2 from user_info";
 
             Statement stmt = conn.createStatement();
 
             ResultSet resultSet = stmt.executeQuery(select);
-
-            ArrayList<UserInfo> list = new ArrayList<>();
-            list.ensureCapacity(4100);
-            while (resultSet.next()) {
-                UserInfo userInfo = new UserInfo();
-                userInfo.setId(resultSet.getInt("id"));
-                userInfo.setUserName(resultSet.getString("pass_word"));
-                list.add(userInfo);
-            }
-
-
             //编写sql
-            String sql = "update sys_user_info set user_name = ? where id = ?";
+            String sql = "update user_info set user_integral_1 = ? and user_integral_2 = ? where user_id = ?";
+            String sql2 = "insert into user_integral_log (log_id,type_id,log_num,log_remarks,user_id) values (?,?,?,?,?)";
             //预编译sql
             pstm = conn.prepareStatement(sql);
-//            pstm2 = conn.prepareStatement(sql2);
-            //开始总计时
-            long bTime1 = System.currentTimeMillis();
-            Timestamp from = Timestamp.from(Instant.now());
+            pstm2 = conn.prepareStatement(sql2);
 
-            for (int i = 0; i < list.size(); i++) {
-                //开启分段计时，计1W数据耗时
+            int temp = 0;
+            //开始计时
+            long bTime1 = System.currentTimeMillis();
+            while (resultSet.next()) {
                 long bTime = System.currentTimeMillis();
-                //开始循环
-                pstm.setString(1, list.get(i).getPassWord());
-                pstm.setInt(2, list.get(i).getId());
+
+//                设置参数
+                pstm.setInt(1, resultSet.getInt("user_integral_2"));
+                pstm.setInt(2, resultSet.getInt("user_integral_1"));
+                pstm.setString(3,resultSet.getString("user_id"));
                 //添加到同一个批处理中
                 pstm.addBatch();
-                //输出
-                if (i % 1000 == 0 || i == list.size()) {
+
+                String x = UUID.randomUUID().toString().replace("-","");
+                pstm2.setString(1, x);
+                pstm2.setString(2, "0");
+                pstm2.setInt(3, resultSet.getInt("user_integral_1"));
+                pstm2.setString(4, "2023年度积分清零:" + resultSet.getInt("user_integral_1"));
+                pstm2.setString(5, resultSet.getString("user_id"));
+
+                pstm2.addBatch();
+                ++temp;
+
+                //10000个一组
+                if (temp % 10000 == 0 || resultSet.isLast()) {
                     //执行批处理
                     pstm.executeBatch();
+                    pstm2.executeBatch();
                     //提交事务
                     conn.commit();
                     //关闭分段计时
                     long eTime = System.currentTimeMillis();
-                    System.out.println("成功插入1000条数据耗时：" + (eTime - bTime));
+                    System.out.println("成功插入"+ temp+"条数据耗时：" + (eTime - bTime1)/1000);
                 }
+
             }
             //关闭总计时
             long eTime1 = System.currentTimeMillis();
