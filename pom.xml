@@ -11,8 +11,12 @@
     <groupId>com.pangjie</groupId>
     <artifactId>pj</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
     <name>pj</name>
     <description>PangJie-All</description>
+    <modules>
+        <module>shardingsphere</module>
+    </modules>
 
     <properties>
         <java.version>11</java.version>
@@ -70,7 +74,7 @@
             <version>1.4.0</version>
         </dependency>
 
-<!--        security-->
+        <!--        security-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
@@ -188,7 +192,7 @@
             <scope>test</scope>
         </dependency>
 
-<!--        二维码-->
+        <!--        二维码-->
         <dependency>
             <groupId>com.google.zxing</groupId>
             <artifactId>javase</artifactId>
