@@ -14,9 +14,6 @@
     <packaging>pom</packaging>
     <name>pj</name>
     <description>PangJie-All</description>
-    <modules>
-        <module>shardingsphere</module>
-    </modules>
 
     <properties>
         <java.version>11</java.version>

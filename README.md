@@ -35,6 +35,10 @@ sa-token 权限验证
 * 动态查询
 * 使用注解/原生sql查询
 * 多对多映射关系
+
+### shardingsphere 分库分表
+
+
 ### nginx
 * nginx.conf 配置文件(带负载均衡)
 * 限流.txt 限流写法
