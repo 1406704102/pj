@@ -24,24 +24,24 @@ public class ServiceException extends RuntimeException {
     /**
      * 错误码
      */
-    private ResultCode resultCode;
+//    private ResultCode resultCode;
 
-    public ServiceException(String msg) {
-        this.resultCode = ResultCode.ERROR;
-        this.msg = msg;
-    }
+//    public ServiceException(String msg) {
+//        this.resultCode = ResultCode.ERROR;
+//        this.msg = msg;
+//    }
 
     public ServiceException() {
         super();
     }
 
-    public ServiceException(ResultCode resultCode) {
-        this.resultCode = resultCode;
-    }
-
-    public ServiceException(ResultCode resultCode, String message) {
-        this.resultCode = resultCode;
-        this.msg = message;
-    }
+//    public ServiceException(ResultCode resultCode) {
+//        this.resultCode = resultCode;
+//    }
+//
+//    public ServiceException(ResultCode resultCode, String message) {
+//        this.resultCode = resultCode;
+//        this.msg = message;
+//    }
 
 }

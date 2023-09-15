@@ -1,22 +1,17 @@
 package com.pangjie.jpa.controller;
 
 
-import com.pangjie.jpa.entity.MenuInfo;
 import com.pangjie.jpa.entity.UserInfo;
 import com.pangjie.jpa.service.MenuInfoService;
 import com.pangjie.jpa.service.UserInfoService;
-import com.pangjie.lottery.entiy.GoodsInfo;
-import com.pangjie.lottery.entiy.LotteryLog;
 import com.pangjie.lottery.sevice.GoodsInfoService;
 import com.pangjie.lottery.sevice.LotteryLogService;
 import com.pangjie.springSecurity.annotation.WithoutToken;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -114,14 +109,19 @@ public class UserInfoCon {
     }
 
     public static void main(String[] args) {
-        ArrayList<Object> list = new ArrayList<>();
+        ArrayList<Integer> list = new ArrayList<>();
         for (int i = 0; i < 110; i++) {
             list.add(i);
         }
         System.out.println(size);
-        ArrayList<Object> list2 = new ArrayList<>();
+        ArrayList<Integer> list2 = new ArrayList<>();
         list2.add(1);
         list2.addAll(list);
+
+        list2.sort(Comparator.reverseOrder());
+        System.out.println(list2);
+        Collections.sort(list2, Comparator.comparingInt(o -> o));
+        System.out.println(list2);
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put(null, null);
         HashSet<String> hashSet = new HashSet<>();

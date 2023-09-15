@@ -1,7 +1,6 @@
 package com.pangjie.wx;
 
 
-import com.alibaba.fastjson.JSONObject;
 import com.pangjie.wx.util.WXUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
