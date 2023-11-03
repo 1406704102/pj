@@ -1,6 +1,7 @@
 package com.pangjie.pjException.handler;
 
 
+import com.pangjie.pjException.BadRequestException;
 import io.netty.util.internal.ThrowableUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -26,6 +27,12 @@ public class GlobalExceptionHandler {
         return buildResponseEntity(PJException.error(throwable.getMessage()));
     }
 
+
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<PJException> badRequestException(BadRequestException e) {
+        log.error(ThrowableUtil.stackTraceToString(e));
+        return buildResponseEntity(PJException.error(e.getStatus(),e.getMessage()));
+    }
 
 
     private ResponseEntity<PJException> buildResponseEntity(PJException serviceException) {

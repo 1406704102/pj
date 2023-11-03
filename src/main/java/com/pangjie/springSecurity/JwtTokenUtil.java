@@ -1,17 +1,16 @@
 package com.pangjie.springSecurity;
 
+import cn.hutool.core.util.IdUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import javax.crypto.spec.SecretKeySpec;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
+import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -45,9 +44,8 @@ public class JwtTokenUtil {
     /**
      * 校验token
      */
-    public boolean validateToken(String token, UserDetails userDetails) {
-        String username = getUserNameFromToken(token);
-        return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
+    public boolean validateToken(String token) {
+        return !isTokenExpired(token);
     }
 
     /**
@@ -57,6 +55,7 @@ public class JwtTokenUtil {
         Map<String, Object> claims = new HashMap<>();
         claims.put(CLAIM_KEY_USERNAME, userDetails.getUsername());
         claims.put(CLAIM_KEY_CREATED, new Date());
+        //也可以加入其他内容 比如用户的权限
         return generateToken(claims);
     }
 
@@ -69,12 +68,15 @@ public class JwtTokenUtil {
     }
 
     private String generateToken(Map<String, Object> claims) {
+        SecretKey secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret));
         return Jwts.builder()
+                .setId(IdUtil.simpleUUID())
                 .setClaims(claims)
                 .setExpiration(generateExpirationDate())
                 //签名算法
 //                .signWith(SignatureAlgorithm.HS512, "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6InBhbmdqaWUiLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNTE2MjM5MDIyfQ.doQ6qOh_W7JQH1i1Uzd4rba8MfnXF2AXEW0XGjy0xKlgzBhPfLbA1e-9Y48kSLSTQlPQXnotffECKNj8WdyiAA")
-                .signWith(SignatureAlgorithm.HS512, secret)
+//                .signWith(SignatureAlgorithm.HS512, secret)
+                .signWith(secretKey)
                 .compact();
     }
 
@@ -88,8 +90,9 @@ public class JwtTokenUtil {
     private Claims getClaimsFromToken(String token) {
         Claims claims = null;
         try {
-            claims = Jwts.parser()
+            claims = Jwts.parserBuilder()
                     .setSigningKey(secret)
+                    .build()
                     .parseClaimsJws(token)
                     .getBody();
         } catch (Exception e) {

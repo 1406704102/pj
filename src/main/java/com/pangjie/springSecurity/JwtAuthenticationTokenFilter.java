@@ -1,6 +1,5 @@
 package com.pangjie.springSecurity;
 
-import com.pangjie.jpa.entity.UserInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,9 +44,10 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
                 if (StringUtils.isNotBlank(username) && SecurityContextHolder.getContext().getAuthentication() == null) {
                     UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
                     // 校验token
-                    if (jwtTokenUtil.validateToken(authToken, userDetails)) {
+                    if (jwtTokenUtil.validateToken(authToken)) {
+
                         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                                userDetails, null, null);
+                                userDetails.getUsername(), "******", null);
                         authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(
                                 httpServletRequest));
                         log.info("authenticated user " + username + ", setting security context");

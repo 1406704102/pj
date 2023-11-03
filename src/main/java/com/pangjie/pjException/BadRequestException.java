@@ -3,6 +3,8 @@ package com.pangjie.pjException;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+
 /**
  * 全局业务异常类
  *
@@ -10,11 +12,13 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class ServiceException extends RuntimeException {
+public class BadRequestException extends RuntimeException {
 
     private static final long serialVersionUID = 3447728300174142127L;
 
     public static final String DEFAULT_MESSAGE = "网络错误，请稍后重试！";
+
+    private Integer status = BAD_REQUEST.value();
 
     /**
      * 异常消息
@@ -31,7 +35,7 @@ public class ServiceException extends RuntimeException {
 //        this.msg = msg;
 //    }
 
-    public ServiceException() {
+    public BadRequestException() {
         super();
     }
 
