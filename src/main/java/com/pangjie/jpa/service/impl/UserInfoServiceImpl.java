@@ -19,8 +19,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -41,6 +42,8 @@ public class UserInfoServiceImpl implements UserInfoService {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private ApplicationContext applicationContext;
+    @Autowired
+    private AuthenticationManager  authenticationManager;
     @Autowired
     private UserDetailsService userDetailsService;
     @Autowired
@@ -118,6 +121,12 @@ public class UserInfoServiceImpl implements UserInfoService {
     public Map<String, Object> queryAll(UserInfo userInfo, Pageable pageable) {
 //        Page<UserInfo> all = userInfoRepo.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.getPredicate(root, userInfo, criteriaBuilder), pageable);
         Page<UserInfo> all = userInfoRepo.findAll((Specification<UserInfo>) (root, criteriaQuery, criteriaBuilder) -> QueryHelp.getPredicate(root, userInfo, criteriaBuilder), pageable);
+//        userInfoRepo.findAll(new Specification<UserInfo>() {
+//            @Override
+//            public Predicate toPredicate(Root<UserInfo> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+//                return null;
+//            }
+//        });
         return PageUtil.toPage(all);
     }
 
@@ -139,11 +148,12 @@ public class UserInfoServiceImpl implements UserInfoService {
             UserDetails userDetails = userDetailsService.loadUserByUsername(userInfo.getUserName());
             Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
 
-            if (!passwordEncoder.matches(userInfo.getPassWord(), userDetails.getPassword())) {
-                throw new BadCredentialsException("密码不正确");
-            }
-            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, authorities);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+//            if (!passwordEncoder.matches(userInfo.getPassWord(), userDetails.getPassword())) {
+//                throw new BadCredentialsException("密码不正确");
+//            }
+            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails.getUsername(),userDetails.getPassword());
+            Authentication authenticate = authenticationManager.authenticate(authentication);
+            SecurityContextHolder.getContext().setAuthentication(authenticate);
             token = jwtTokenUtil.generateToken(userDetails);
         } catch (AuthenticationException e) {
             log.warn("登录异常:{}", e.getMessage());

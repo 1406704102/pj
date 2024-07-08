@@ -1,7 +1,6 @@
 package com.pangjie.rocketMQ.producer;
 
 import com.alibaba.fastjson.JSON;
-import com.pangjie.jpa.entity.UserInfo;
 import com.pangjie.lottery.entiy.GoodsInfo;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -134,7 +133,7 @@ public class RocketTemplateProducer {
         log.info("发送带 tag 的消息完成：message = {}", message);
     }
 
-    /**
+    /**Z
      * 同步发送延时消息
      *
      * @param topic      topic

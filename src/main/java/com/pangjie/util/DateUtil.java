@@ -1,5 +1,7 @@
 package com.pangjie.util;
 
+import cn.hutool.core.lang.UUID;
+
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.*;
@@ -260,5 +262,13 @@ public class DateUtil {
         long secondsDiff = ChronoUnit.SECONDS.between(startDate, endDate);
 //        System.out.println("两个时间之间的秒数差为：" + secondsDiff);
         return Math.toIntExact(secondsDiff);
+    }
+
+    public static void main(String[] args) {
+        for (int i = 0; i < 100; i++) {
+            UUID uuid = UUID.randomUUID();
+            String shortUUID = uuid.toString().replace("-", "").substring(0, 30);
+            System.out.println(shortUUID);
+        }
     }
 }

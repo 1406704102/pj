@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "goods_info")
@@ -29,4 +30,6 @@ public class GoodsInfo {
 
     @Transient
     private Integer goodsProbability;
+    @Transient
+    private Timestamp createTime;
 }
